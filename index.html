@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cinar Grill - Authentische türkische Küche seit über 30 Jahren. Genießen Sie traditionelle Grillspezialitäten vom Holzkohlegrill in gemütlicher Atmosphäre." />
+    <meta name="keywords" content="Türkisches Restaurant, Grillspezialitäten, Kebab, Holzkohlegrill, Authentische Küche, Cinar Grill" />
+    <meta name="author" content="Cinar Grill" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.cinargrill.de/" />
+    <meta property="og:title" content="Cinar Grill - Authentische Türkische Küche" />
+    <meta property="og:description" content="Erleben Sie die perfekte Verbindung aus Tradition und Moderne. Genießen Sie Grillspezialitäten vom Feinsten." />
+    <meta property="og:image" content="https://www.cinargrill.de/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.cinargrill.de/" />
+    <meta property="twitter:title" content="Cinar Grill - Authentische Türkische Küche" />
+    <meta property="twitter:description" content="Erleben Sie die perfekte Verbindung aus Tradition und Moderne. Genießen Sie Grillspezialitäten vom Feinsten." />
+    <meta property="twitter:image" content="https://www.cinargrill.de/og-image.jpg" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Cinar Grill",
+      "image": "https://www.cinargrill.de/og-image.jpg",
+      "description": "Authentische türkische Küche seit über 30 Jahren",
+      "@id": "https://www.cinargrill.de",
+      "url": "https://www.cinargrill.de",
+      "telephone": "+491234567890",
+      "priceRange": "€€",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Musterstraße 123",
+        "addressLocality": "Musterstadt",
+        "postalCode": "12345",
+        "addressCountry": "DE"
+      },
+      "servesCuisine": "Turkish",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "11:00",
+          "closes": "23:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday"],
+          "opens": "12:00",
+          "closes": "00:00"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "523"
+      }
+    }
+    </script>
+
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+
+    <!-- Security Headers (handled by server/Netlify) -->
+
+    <title>Cinar Grill - Authentische Türkische Küche | Restaurant</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- No Script Fallback -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
+        <h1>Cinar Grill</h1>
+        <p>Bitte aktivieren Sie JavaScript, um diese Website zu nutzen.</p>
+        <p>Please enable JavaScript to use this website.</p>
+      </div>
+    </noscript>
+  </body>
+</html>

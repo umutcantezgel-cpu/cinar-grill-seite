@@ -1,0 +1,18 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 30000,
+    "wait": 1000,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+    }
+  },
+  "urls": [
+    "http://localhost:4173/",
+    "http://localhost:4173/speisekarte",
+    "http://localhost:4173/ueber-uns",
+    "http://localhost:4173/galerie",
+    "http://localhost:4173/reservierung",
+    "http://localhost:4173/kontakt"
+  ]
+}

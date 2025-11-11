@@ -1,0 +1,8 @@
+# robots.txt for Cinar Grill
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.cinargrill.de/sitemap.xml
