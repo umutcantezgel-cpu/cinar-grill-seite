@@ -1,0 +1,217 @@
+// ============================================
+// BUTTON COMPONENTS
+// Premium Glassmorphism Button Variants
+// ============================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================
+// BASE BUTTON
+// ============================================
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $button-padding;
+  min-height: $button-min-height;
+  border-radius: $button-border-radius;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-base;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  @include transition-fast(all);
+
+  // Hover & Focus states
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  // Disabled state
+  &:disabled,
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Responsive
+  @include responsive('mobile') {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// ============================================
+// BUTTON VARIANTS
+// ============================================
+
+/// Primary Button (Gradient)
+.button-primary {
+  background: linear-gradient(
+    135deg,
+    $color-brand-primary 0%,
+    darken($color-brand-primary, 8%) 100%
+  );
+  color: $color-white;
+  box-shadow: $shadow-md;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.3);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    box-shadow: $shadow-sm;
+  }
+}
+
+/// Glass Button (Glassmorphism)
+.button-glass {
+  @include glass($glass-blur-md, 0.7, 0.3);
+  color: $color-gray-900;
+
+  &:hover {
+    @include glass($glass-blur-lg, 0.85, 0.4);
+  }
+}
+
+/// Glass Gold Button (Tinted)
+.button-glass-gold {
+  @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.2);
+  color: $color-gray-900;
+  font-weight: $font-weight-semibold;
+
+  &:hover {
+    @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.3, $glass-blur-lg);
+  }
+}
+
+/// Secondary Button (Outline Glass)
+.button-secondary {
+  background: transparent;
+  border: 2px solid rgba($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.5);
+  color: $color-brand-primary;
+  backdrop-filter: blur($glass-blur-sm);
+  -webkit-backdrop-filter: blur($glass-blur-sm);
+
+  &:hover {
+    background: rgba($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.1);
+    border-color: $color-brand-primary;
+    backdrop-filter: blur($glass-blur-md);
+    -webkit-backdrop-filter: blur($glass-blur-md);
+  }
+}
+
+/// Outline Button (Inverse colors)
+.button-outline {
+  background: transparent;
+  border: 2px solid currentColor;
+  color: $color-white;
+
+  &:hover {
+    background: $color-white;
+    color: $color-brand-primary;
+  }
+}
+
+// ============================================
+// BUTTON SIZES
+// ============================================
+
+.button-sm {
+  padding: $button-padding-sm;
+  min-height: 2rem;  // 32px
+  font-size: $font-size-sm;
+}
+
+.button-lg {
+  padding: $button-padding-lg;
+  min-height: 3.5rem;  // 56px
+  font-size: $font-size-lg;
+}
+
+// ============================================
+// BUTTON WITH ICON
+// ============================================
+
+.button-icon {
+  svg,
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.button-icon-only {
+  padding: $space-3;
+  min-width: $button-min-height;
+
+  svg,
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+// ============================================
+// BUTTON GROUPS
+// ============================================
+
+.button-group {
+  display: flex;
+  gap: $space-3;
+  flex-wrap: wrap;
+
+  @include responsive('mobile') {
+    flex-direction: column;
+
+    .button {
+      width: 100%;
+    }
+  }
+}
+
+// ============================================
+// DARK MODE
+// ============================================
+
+@include dark-mode {
+  .button-glass {
+    @include glass-dark($glass-blur-md, 0.75);
+    color: $color-white;
+
+    &:hover {
+      @include glass-dark($glass-blur-lg, 0.85);
+    }
+  }
+
+  .button-glass-gold {
+    @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.25, $glass-blur-md);
+    color: $color-white;
+
+    &:hover {
+      @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.35, $glass-blur-lg);
+    }
+  }
+
+  .button-secondary {
+    border-color: rgba($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.6);
+    color: lighten($color-brand-primary, 20%);
+
+    &:hover {
+      background: rgba($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.2);
+    }
+  }
+}

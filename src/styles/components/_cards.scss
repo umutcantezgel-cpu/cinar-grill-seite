@@ -1,0 +1,358 @@
+// ============================================
+// CARD COMPONENTS
+// Premium Glassmorphism Card Variants
+// ============================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// ============================================
+// BASE CARD
+// ============================================
+.card {
+  border-radius: $card-border-radius;
+  padding: $card-padding;
+  @include transition(transform, box-shadow);
+  overflow: hidden;
+  position: relative;
+
+  // Hover effect
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+// ============================================
+// CARD VARIANTS
+// ============================================
+
+/// Standard Card (Solid Background)
+.card-default {
+  background: $color-white;
+  border: 1px solid $color-gray-200;
+  box-shadow: $shadow-md;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+/// Glass Card (Glassmorphism)
+.card-glass {
+  @include glass($glass-blur-md, 0.7, 0.3);
+
+  &:hover {
+    @include glass($glass-blur-lg, 0.8, 0.4);
+    box-shadow: $shadow-glass-hover;
+  }
+}
+
+/// Elevated Glass Card (Stronger effect)
+.card-glass-elevated {
+  @include glass-elevated(3);
+
+  &:hover {
+    @include glass-elevated(4);
+    transform: translateY(-8px);
+  }
+}
+
+/// Gold Tinted Glass (for Testimonials)
+.card-glass-gold {
+  @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.2);
+  border-left: 4px solid $color-brand-accent;
+
+  // Subtle shine effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    pointer-events: none;
+  }
+
+  &:hover {
+    @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.3, $glass-blur-lg);
+  }
+}
+
+/// Red Tinted Glass (for Important Cards)
+.card-glass-red {
+  @include glass-tinted($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.15);
+  border-left: 4px solid $color-brand-primary;
+
+  &:hover {
+    @include glass-tinted($color-brand-primary-r, $color-brand-primary-g, $color-brand-primary-b, 0.25, $glass-blur-lg);
+  }
+}
+
+// ============================================
+// CARD SIZES
+// ============================================
+
+.card-sm {
+  padding: $space-4;
+  border-radius: $radius-lg;
+}
+
+.card-lg {
+  padding: $card-padding-lg;
+  border-radius: $radius-2xl;
+}
+
+// ============================================
+// CARD CONTENT ELEMENTS
+// ============================================
+
+.card-title {
+  font-family: $font-serif;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-xl;
+  color: $color-brand-primary;
+  margin-bottom: $space-3;
+}
+
+.card-subtitle {
+  font-size: $font-size-sm;
+  color: $color-gray-600;
+  margin-bottom: $space-4;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-description {
+  color: $color-gray-700;
+  line-height: $line-height-relaxed;
+  margin-bottom: $space-4;
+}
+
+.card-footer {
+  margin-top: $space-6;
+  padding-top: $space-4;
+  border-top: 1px solid rgba($color-gray-300, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// ============================================
+// SPECIAL CARD TYPES
+// ============================================
+
+/// Menu Card (for restaurant menu items)
+.menu-card {
+  @include glass($glass-blur-md, 0.7);
+  @include card-hover;
+
+  .card-title {
+    color: $color-brand-primary;
+    font-size: $font-size-lg;
+  }
+
+  .card-description {
+    color: $color-gray-600;
+    @include truncate(3);  // Max 3 lines
+  }
+}
+
+/// Testimonial Card
+.testimonial-card {
+  @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.2);
+  border-left: 4px solid $color-brand-accent;
+  position: relative;
+
+  // Quote decoration
+  &::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    font-size: 4rem;
+    font-family: $font-serif;
+    color: rgba($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.3);
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-style: italic;
+    font-size: $font-size-base;
+    line-height: $line-height-relaxed;
+    margin-bottom: $space-4;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-author {
+    font-weight: $font-weight-semibold;
+    color: $color-brand-primary;
+    text-align: right;
+    font-size: $font-size-sm;
+  }
+
+  .stars {
+    color: $color-brand-accent;
+    font-size: $font-size-lg;
+    margin-bottom: $space-3;
+  }
+
+  &:hover {
+    @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.3, $glass-blur-lg);
+    transform: translateY(-4px);
+  }
+}
+
+/// Feature Card (for "Why Us" features)
+.feature-card {
+  text-align: center;
+  @include glass($glass-blur-sm, 0.6);
+  padding: $space-6;
+  @include transition(transform, backdrop-filter);
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: $space-4;
+    display: inline-block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  .feature-title {
+    font-family: $font-serif;
+    font-weight: $font-weight-semibold;
+    color: $color-brand-primary;
+    font-size: $font-size-lg;
+    margin-bottom: $space-2;
+  }
+
+  .feature-description {
+    color: $color-gray-600;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+  }
+
+  &:hover {
+    @include glass($glass-blur-md, 0.75);
+    transform: translateY(-4px);
+
+    .feature-icon {
+      transform: scale(1.1);
+      @include transition-fast(transform);
+    }
+  }
+}
+
+/// Rating Summary Card
+.rating-summary {
+  @include glass-elevated(2);
+  text-align: center;
+  padding: $space-8;
+
+  .rating-number {
+    font-size: $font-size-5xl;
+    font-weight: $font-weight-bold;
+    @include gradient-text;
+    margin-bottom: $space-2;
+  }
+
+  .rating-stars {
+    font-size: $font-size-2xl;
+    color: $color-brand-accent;
+    margin-bottom: $space-3;
+    letter-spacing: 0.125em;
+  }
+
+  .rating-count {
+    color: $color-gray-600;
+    font-size: $font-size-sm;
+  }
+}
+
+// ============================================
+// CARD GRIDS
+// ============================================
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $space-6;
+
+  @include responsive('mobile') {
+    grid-template-columns: 1fr;
+    gap: $space-4;
+  }
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $space-6;
+
+  @include responsive('mobile') {
+    grid-template-columns: 1fr;
+    gap: $space-4;
+  }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $space-6;
+
+  @include responsive('mobile') {
+    grid-template-columns: 1fr;
+    gap: $space-4;
+  }
+}
+
+// ============================================
+// DARK MODE
+// ============================================
+
+@include dark-mode {
+  .card-default {
+    background: $color-gray-800;
+    border-color: $color-gray-700;
+  }
+
+  .card-glass,
+  .menu-card {
+    @include glass-dark($glass-blur-md, 0.75);
+    color: $color-white;
+
+    &:hover {
+      @include glass-dark($glass-blur-lg, 0.85);
+    }
+  }
+
+  .card-title,
+  .feature-title {
+    color: lighten($color-brand-primary, 15%);
+  }
+
+  .card-description,
+  .feature-description {
+    color: $color-gray-300;
+  }
+
+  .testimonial-card {
+    @include glass-tinted($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.25);
+
+    &::before {
+      color: rgba($color-brand-accent-r, $color-brand-accent-g, $color-brand-accent-b, 0.4);
+    }
+
+    .testimonial-text {
+      color: $color-gray-200;
+    }
+
+    .testimonial-author {
+      color: lighten($color-brand-primary, 15%);
+    }
+  }
+}

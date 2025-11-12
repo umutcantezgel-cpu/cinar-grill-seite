@@ -1,0 +1,378 @@
+// ============================================
+// SCSS MIXINS
+// Reusable patterns for Glassmorphism, Responsive, Animations
+// ============================================
+
+@use 'variables' as *;
+
+// ============================================
+// GLASSMORPHISM MIXINS
+// ============================================
+
+/// Standard Glass Effect
+/// @param {Number} $blur - Blur amount (default: 12px)
+/// @param {Number} $opacity - Background opacity (default: 0.7)
+/// @param {Number} $border-opacity - Border opacity (default: 0.3)
+/// @example scss - Usage
+///   .card { @include glass(12px, 0.7, 0.3); }
+@mixin glass($blur: $glass-blur-md, $opacity: $glass-opacity-light, $border-opacity: $glass-border-opacity) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur) saturate($glass-saturation);
+  -webkit-backdrop-filter: blur($blur) saturate($glass-saturation);
+  border: 1px solid rgba(255, 255, 255, $border-opacity);
+  box-shadow: $shadow-glass, inset 0 0 0 1px rgba(255, 255, 255, $border-opacity);
+
+  // Fallback for browsers without backdrop-filter support
+  @supports not (backdrop-filter: blur($blur)) {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+/// Tinted Glass Effect (colored glass)
+/// @param {Number} $r - Red channel (0-255)
+/// @param {Number} $g - Green channel (0-255)
+/// @param {Number} $b - Blue channel (0-255)
+/// @param {Number} $opacity - Tint opacity (default: 0.15)
+/// @param {Number} $blur - Blur amount (default: 12px)
+/// @example scss - Usage
+///   .card-gold { @include glass-tinted(212, 175, 55, 0.2); }
+@mixin glass-tinted($r, $g, $b, $opacity: 0.15, $blur: $glass-blur-md) {
+  background: rgba($r, $g, $b, $opacity);
+  backdrop-filter: blur($blur) saturate($glass-saturation);
+  -webkit-backdrop-filter: blur($blur) saturate($glass-saturation);
+  border: 1px solid rgba($r, $g, $b, $opacity + 0.1);
+  box-shadow: 0 8px 32px 0 rgba($r, $g, $b, 0.15);
+
+  @supports not (backdrop-filter: blur($blur)) {
+    background: rgba($r, $g, $b, $opacity + 0.3);
+  }
+}
+
+/// Dark Mode Glass (inverted for dark backgrounds)
+/// @param {Number} $blur - Blur amount (default: 12px)
+/// @param {Number} $opacity - Background opacity (default: 0.75)
+@mixin glass-dark($blur: $glass-blur-md, $opacity: 0.75) {
+  background: rgba(28, 28, 28, $opacity);
+  backdrop-filter: blur($blur) saturate($glass-saturation);
+  -webkit-backdrop-filter: blur($blur) saturate($glass-saturation);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/// Elevated Glass (stronger effect for floating elements)
+/// @param {Number} $elevation - Elevation level (1-5)
+@mixin glass-elevated($elevation: 2) {
+  @if $elevation == 1 {
+    @include glass($glass-blur-sm, 0.65, 0.25);
+  } @else if $elevation == 2 {
+    @include glass($glass-blur-md, 0.7, 0.3);
+  } @else if $elevation == 3 {
+    @include glass($glass-blur-lg, 0.75, 0.35);
+  } @else if $elevation == 4 {
+    @include glass($glass-blur-xl, 0.8, 0.4);
+  } @else {
+    @include glass($glass-blur-xl, 0.85, 0.45);
+    box-shadow: $shadow-2xl, inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}
+
+// ============================================
+// RESPONSIVE MIXINS
+// ============================================
+
+/// Responsive breakpoint helper
+/// @param {String} $breakpoint - Breakpoint name (mobile, tablet, desktop)
+/// @example scss - Usage
+///   @include responsive('mobile') { flex-direction: column; }
+@mixin responsive($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: #{map-get($breakpoints, $breakpoint) - 1px}) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint `#{$breakpoint}` not found in $breakpoints map.";
+  }
+}
+
+/// Minimum width breakpoint
+@mixin responsive-min($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+      @content;
+    }
+  }
+}
+
+/// Between two breakpoints
+@mixin responsive-between($min, $max) {
+  @media (min-width: #{map-get($breakpoints, $min)}) and (max-width: #{map-get($breakpoints, $max) - 1px}) {
+    @content;
+  }
+}
+
+// ============================================
+// ANIMATION MIXINS
+// ============================================
+
+/// Smooth transition
+/// @param {List} $properties - Properties to transition
+/// @param {Time} $duration - Duration (default: $transition-base)
+/// @example scss - Usage
+///   @include transition(transform, opacity);
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, $property $transition-base $transition-ease, comma);
+  }
+  transition: $transitions;
+}
+
+/// Fast transition (hover effects)
+@mixin transition-fast($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, $property $transition-fast $transition-ease, comma);
+  }
+  transition: $transitions;
+}
+
+/// Fade-in animation
+/// @param {Time} $duration - Animation duration (default: 0.3s)
+@mixin fade-in($duration: 0.3s) {
+  animation: fadeIn $duration ease-in-out;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/// Slide-up animation
+/// @param {Time} $duration - Animation duration (default: 0.4s)
+/// @param {Length} $distance - Slide distance (default: 40px)
+@mixin slide-up($duration: 0.4s, $distance: 40px) {
+  animation: slideUp $duration $transition-ease;
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY($distance);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/// Scale animation
+/// @param {Time} $duration - Animation duration (default: 0.3s)
+@mixin scale-in($duration: 0.3s, $from: 0.95) {
+  animation: scaleIn $duration $transition-ease;
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale($from);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/// Shimmer effect (loading state)
+@mixin shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+// ============================================
+// UTILITY MIXINS
+// ============================================
+
+/// Center element with flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/// Center element with absolute positioning
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/// Truncate text with ellipsis
+/// @param {Number} $lines - Number of lines (default: 1)
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/// Aspect ratio container
+/// @param {Number} $width - Width ratio
+/// @param {Number} $height - Height ratio
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: $width / $height;
+
+  @supports not (aspect-ratio: 1) {
+    &::before {
+      content: '';
+      float: left;
+      padding-top: ($height / $width) * 100%;
+    }
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+}
+
+/// Hide scrollbar (but keep functionality)
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;  // IE and Edge
+  scrollbar-width: none;     // Firefox
+
+  &::-webkit-scrollbar {
+    display: none;  // Chrome, Safari, Opera
+  }
+}
+
+/// Focus ring (accessibility)
+@mixin focus-ring($color: $focus-ring-color, $width: $focus-ring-width, $offset: $focus-ring-offset) {
+  outline: $width solid $color;
+  outline-offset: $offset;
+}
+
+/// Visually hidden (screen reader only)
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// ============================================
+// GRADIENT MIXINS
+// ============================================
+
+/// Brand gradient (Red to Gold)
+@mixin gradient-brand {
+  background: linear-gradient(
+    135deg,
+    $color-brand-primary 0%,
+    $color-brand-accent 100%
+  );
+}
+
+/// Gradient text
+@mixin gradient-text {
+  @include gradient-brand;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/// Mesh gradient background
+@mixin gradient-mesh($color1, $color2, $opacity1: 0.2, $opacity2: 0.15) {
+  background:
+    radial-gradient(
+      ellipse at top left,
+      rgba($color1, $opacity1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba($color2, $opacity2) 0%,
+      transparent 50%
+    ),
+    $color-gray-50;
+  background-attachment: fixed;
+}
+
+// ============================================
+// HOVER & INTERACTIVE MIXINS
+// ============================================
+
+/// Card hover effect (elevation)
+@mixin card-hover {
+  @include transition-fast(transform, box-shadow);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-glass-hover;
+  }
+}
+
+/// Button hover effect
+@mixin button-hover {
+  @include transition-fast(transform, box-shadow, background);
+
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/// Glow effect on hover
+/// @param {Color} $color - Glow color
+/// @param {Number} $intensity - Glow intensity (0-1)
+@mixin glow-hover($color, $intensity: 0.3) {
+  @include transition-fast(box-shadow);
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba($color, $intensity);
+  }
+}
+
+// ============================================
+// DARK MODE MIXIN
+// ============================================
+
+/// Dark mode media query wrapper
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+/// Reduced motion media query wrapper
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

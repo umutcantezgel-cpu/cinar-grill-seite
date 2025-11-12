@@ -1,8 +1,8 @@
 {
   "name": "cinar-grill-world-class",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "type": "module",
-  "description": "World-Class Restaurant Website – Top 1-5% Performance/A11y/Security (€30k+ Value)",
+  "description": "World-Class Restaurant Website – Premium Glassmorphism Design + Top 1-5% Performance (€40k+ Value)",
   "author": "Cinar Grill",
   "license": "MIT",
   "keywords": [
@@ -65,6 +65,7 @@
     "pa11y": "^8.0.0",
     "pa11y-ci": "^3.1.0",
     "prettier": "^3.3.0",
+    "sass": "^1.80.0",
     "prettier-plugin-astro": "^0.14.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.5.0"
