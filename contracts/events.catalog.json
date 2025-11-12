@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinar-grill.de/schemas/events.catalog.json",
+  "type": "object",
+  "title": "Events Catalog (CloudEvents-inspired)",
+  "version": "1.0.0",
+  "events": [
+    {
+      "type": "com.cinar-grill.consent.given",
+      "specversion": "1.0",
+      "description": "User has given consent for a specific category",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "category": {
+          "type": "string",
+          "enum": ["essential", "analytics", "marketing", "external"]
+        },
+        "timestamp": "string (ISO 8601)",
+        "version": "string"
+      },
+      "actions": [
+        "Store consent in localStorage",
+        "Update CSP dynamically (if applicable)",
+        "Load deferred scripts/embeds",
+        "Track consent event (if analytics enabled)"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.consent.revoked",
+      "specversion": "1.0",
+      "description": "User has revoked consent for a specific category",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "category": "string",
+        "timestamp": "string (ISO 8601)"
+      },
+      "actions": [
+        "Remove consent from localStorage",
+        "Block/unload external scripts",
+        "Remove third-party cookies (if possible)",
+        "Reload page if necessary"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.form.submitted",
+      "specversion": "1.0",
+      "description": "User has submitted a form (contact, newsletter, etc.)",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "formType": "string (contact, newsletter, reservation)",
+        "timestamp": "string (ISO 8601)",
+        "honeypot": "boolean (caught bot)",
+        "validationPassed": "boolean"
+      },
+      "actions": [
+        "Validate client-side",
+        "Send to server endpoint",
+        "Show success/error message",
+        "Track conversion (if analytics enabled)",
+        "Rate-limit check"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.navigation.click",
+      "specversion": "1.0",
+      "description": "User clicked a navigation link",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "linkText": "string",
+        "targetUrl": "string",
+        "timestamp": "string (ISO 8601)"
+      },
+      "actions": [
+        "Track navigation (if analytics enabled)",
+        "Smooth scroll to anchor if same-page",
+        "Preload target page resources"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.embed.loaded",
+      "specversion": "1.0",
+      "description": "User activated a two-click embed (map, video)",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "embedType": "string (google-maps, youtube)",
+        "consentGiven": "boolean",
+        "timestamp": "string (ISO 8601)"
+      },
+      "actions": [
+        "Check consent status",
+        "Load iframe with proper sandbox/referrer attributes",
+        "Store preference in localStorage",
+        "Track embed activation (if analytics enabled)"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.error.occurred",
+      "specversion": "1.0",
+      "description": "An error occurred (form validation, network, etc.)",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "errorType": "string (validation, network, server)",
+        "errorMessage": "string",
+        "context": "object",
+        "timestamp": "string (ISO 8601)"
+      },
+      "actions": [
+        "Log to console (dev mode)",
+        "Show user-friendly error message",
+        "Trigger retry mechanism (if network error)",
+        "Send to error tracking service (if enabled)"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.csp.violation",
+      "specversion": "1.0",
+      "description": "CSP violation detected",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "violatedDirective": "string",
+        "blockedUri": "string",
+        "documentUri": "string",
+        "timestamp": "string (ISO 8601)"
+      },
+      "actions": [
+        "Log to console",
+        "Send to CSP report endpoint",
+        "Alert development team (staging/production)"
+      ]
+    },
+    {
+      "type": "com.cinar-grill.performance.cwv",
+      "specversion": "1.0",
+      "description": "Core Web Vitals measured",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "lcp": "number",
+        "inp": "number",
+        "cls": "number",
+        "url": "string",
+        "timestamp": "string (ISO 8601)"
+      },
+      "actions": [
+        "Send to analytics (if enabled)",
+        "Compare against thresholds",
+        "Trigger alert if degraded"
+      ]
+    }
+  ]
+}

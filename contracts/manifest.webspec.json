@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinar-grill.de/schemas/manifest.webspec.json",
+  "type": "object",
+  "title": "Web Application Manifest Specification",
+  "version": "1.0.0",
+  "app": {
+    "name": "Cinar Grill",
+    "shortName": "Cinar Grill",
+    "description": "Authentische Türkische Küche – Frische Zutaten, Traditionelle Rezepte",
+    "businessType": "Restaurant",
+    "schemaType": "Restaurant",
+    "cuisineType": "Turkish",
+    "priceRange": "€€",
+    "languages": {
+      "default": "de-DE",
+      "supported": ["de-DE"],
+      "fallback": "de-DE"
+    },
+    "contact": {
+      "email": "info@cinar-grill.de",
+      "phone": "+49-XXX-XXXXXXX",
+      "address": {
+        "street": "TODO: Straße Nr.",
+        "city": "TODO: Stadt",
+        "postalCode": "TODO: PLZ",
+        "country": "DE"
+      }
+    },
+    "social": {
+      "facebook": "TODO",
+      "instagram": "TODO",
+      "googleMyBusiness": "TODO"
+    },
+    "openingHours": [
+      "Mo-Su 11:00-23:00"
+    ]
+  },
+  "brand": {
+    "primaryColor": "#c41e3a",
+    "secondaryColor": "#1a1a1a",
+    "accentColor": "#d4af37",
+    "logoPath": "/assets/img/logo.svg",
+    "faviconPath": "/favicon.ico",
+    "fonts": {
+      "primary": {
+        "family": "Inter",
+        "weights": [400, 600, 700],
+        "format": "woff2",
+        "display": "swap"
+      },
+      "heading": {
+        "family": "Playfair Display",
+        "weights": [600, 700],
+        "format": "woff2",
+        "display": "swap"
+      }
+    }
+  },
+  "performance": {
+    "budgets": {
+      "javascript": {
+        "maxSizeKB": 50,
+        "critical": 20
+      },
+      "css": {
+        "maxSizeKB": 30,
+        "critical": 15
+      },
+      "fonts": {
+        "maxSizeKB": 100,
+        "preload": true
+      },
+      "images": {
+        "formats": ["webp", "avif", "jpg"],
+        "lazyLoad": true,
+        "lqip": true
+      }
+    },
+    "coreWebVitals": {
+      "lcp": {
+        "target": 2500,
+        "unit": "ms",
+        "percentile": 75
+      },
+      "inp": {
+        "target": 200,
+        "unit": "ms",
+        "percentile": 75
+      },
+      "cls": {
+        "target": 0.1,
+        "unit": "score",
+        "percentile": 75
+      }
+    },
+    "preload": {
+      "fonts": [
+        "/assets/font/inter-600.woff2",
+        "/assets/font/playfair-700.woff2"
+      ],
+      "criticalCSS": true,
+      "hero": true
+    }
+  },
+  "security": {
+    "csp": {
+      "mode": "strict",
+      "profiles": {
+        "development": {
+          "reportOnly": true,
+          "reportUri": "/api/csp-report"
+        },
+        "staging": {
+          "reportOnly": false,
+          "reportUri": "/api/csp-report"
+        },
+        "production": {
+          "reportOnly": false,
+          "reportUri": "/api/csp-report"
+        }
+      },
+      "directives": {
+        "default-src": ["'self'"],
+        "script-src": ["'self'"],
+        "style-src": ["'self'"],
+        "img-src": ["'self'", "data:", "https:"],
+        "font-src": ["'self'", "data:"],
+        "connect-src": ["'self'"],
+        "frame-src": ["'none'"],
+        "object-src": ["'none'"],
+        "base-uri": ["'self'"],
+        "form-action": ["'self'"],
+        "frame-ancestors": ["'none'"],
+        "upgrade-insecure-requests": true,
+        "block-all-mixed-content": true
+      },
+      "trustedTypes": {
+        "enabled": true,
+        "require": "script",
+        "allowDuplicates": false
+      }
+    },
+    "headers": {
+      "hsts": {
+        "maxAge": 31536000,
+        "includeSubDomains": true,
+        "preload": true
+      },
+      "xFrameOptions": "DENY",
+      "xContentTypeOptions": "nosniff",
+      "referrerPolicy": "strict-origin-when-cross-origin",
+      "permissionsPolicy": {
+        "geolocation": [],
+        "microphone": [],
+        "camera": [],
+        "payment": [],
+        "usb": [],
+        "magnetometer": [],
+        "gyroscope": [],
+        "accelerometer": []
+      },
+      "crossOriginEmbedderPolicy": "require-corp",
+      "crossOriginOpenerPolicy": "same-origin",
+      "crossOriginResourcePolicy": "same-origin"
+    },
+    "sri": {
+      "enabled": true,
+      "algorithms": ["sha384", "sha512"],
+      "coverage": {
+        "css": true,
+        "js": true,
+        "fonts": true
+      },
+      "manifestPath": "/integrity.manifest.json"
+    }
+  },
+  "consent": {
+    "mode": "opt-in",
+    "required": true,
+    "categories": {
+      "essential": {
+        "required": true,
+        "description": "Technisch notwendige Cookies",
+        "cookies": []
+      },
+      "analytics": {
+        "required": false,
+        "description": "Anonyme Nutzungsstatistiken",
+        "cookies": [],
+        "scripts": []
+      },
+      "marketing": {
+        "required": false,
+        "description": "Marketing und Werbung",
+        "cookies": [],
+        "scripts": []
+      },
+      "external": {
+        "required": false,
+        "description": "Externe Inhalte (Maps, Videos)",
+        "embeds": ["google-maps", "youtube"]
+      }
+    },
+    "twoClick": {
+      "enabled": true,
+      "services": {
+        "googleMaps": {
+          "embedUrl": "https://www.google.com/maps/embed",
+          "privacyUrl": "https://policies.google.com/privacy",
+          "sandbox": "allow-scripts allow-same-origin allow-popups",
+          "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "youtube": {
+          "embedUrl": "https://www.youtube-nocookie.com/embed",
+          "privacyUrl": "https://policies.google.com/privacy",
+          "sandbox": "allow-scripts allow-same-origin allow-presentation",
+          "referrerPolicy": "no-referrer-when-downgrade"
+        }
+      }
+    },
+    "storage": {
+      "key": "cinar-consent",
+      "ttl": 31536000,
+      "version": "1.0"
+    }
+  },
+  "features": {
+    "pwa": {
+      "enabled": false,
+      "manifestPath": "/manifest.json",
+      "serviceWorker": false
+    },
+    "forms": {
+      "contactForm": {
+        "enabled": true,
+        "endpoint": "/api/contact",
+        "method": "POST",
+        "validation": "client-server",
+        "honeypot": true,
+        "rateLimit": {
+          "requests": 5,
+          "window": 3600
+        }
+      },
+      "newsletter": {
+        "enabled": true,
+        "doubleOptIn": true,
+        "endpoint": "/api/newsletter",
+        "provider": "TODO"
+      }
+    },
+    "search": {
+      "enabled": false,
+      "provider": null
+    },
+    "multilingual": {
+      "enabled": false,
+      "strategy": "subdirectory"
+    }
+  },
+  "seo": {
+    "siteName": "Cinar Grill",
+    "siteUrl": "https://www.cinar-grill.de",
+    "defaultTitle": "Cinar Grill – Authentische Türkische Küche",
+    "titleTemplate": "%s | Cinar Grill",
+    "defaultDescription": "Erleben Sie authentische türkische Küche mit frischen Zutaten und traditionellen Rezepten. Täglich frisch vom Holzkohlengrill.",
+    "defaultImage": "/assets/img/og-image.jpg",
+    "twitterHandle": "@cinargrill",
+    "structuredData": {
+      "organization": true,
+      "restaurant": true,
+      "localBusiness": true,
+      "breadcrumbs": true,
+      "reviews": true
+    },
+    "robots": {
+      "index": true,
+      "follow": true
+    },
+    "sitemap": {
+      "enabled": true,
+      "path": "/sitemap.xml",
+      "changefreq": "weekly",
+      "priority": 0.8
+    }
+  },
+  "monitoring": {
+    "slo": {
+      "availability": {
+        "target": 99.9,
+        "window": "30d"
+      },
+      "performance": {
+        "lcp": {
+          "target": 2500,
+          "percentile": 75
+        },
+        "inp": {
+          "target": 200,
+          "percentile": 75
+        }
+      },
+      "accessibility": {
+        "critical": 0,
+        "serious": 0
+      },
+      "security": {
+        "vulnerabilities": 0,
+        "grade": "A"
+      }
+    },
+    "alerts": {
+      "availability": {
+        "threshold": 99.5,
+        "window": "5m"
+      },
+      "performance": {
+        "lcp": 3500,
+        "cls": 0.25
+      }
+    }
+  },
+  "ci": {
+    "qualityGates": {
+      "lighthouse": {
+        "performance": 95,
+        "accessibility": 100,
+        "bestPractices": 95,
+        "seo": 95,
+        "pwa": 0
+      },
+      "axe": {
+        "critical": 0,
+        "serious": 0
+      },
+      "security": {
+        "securityHeaders": "A",
+        "observatory": "A",
+        "sri": 100
+      },
+      "links": {
+        "broken": 0
+      },
+      "inline": {
+        "scripts": 0,
+        "styles": 0
+      }
+    },
+    "blocking": true,
+    "reportPath": "docs/reports"
+  }
+}

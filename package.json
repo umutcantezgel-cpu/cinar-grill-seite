@@ -1,29 +1,72 @@
 {
-  "name": "cinar-grill-seite",
-  "version": "1.0.0",
-  "description": "Produktionsreifes Restaurant-Projekt für Cinar Grill mit authentischen türkischen Restaurant-Referenzen",
-  "main": "index.html",
-  "scripts": {
-    "start": "npx http-server . -p 8080",
-    "lighthouse": "lhci autorun",
-    "pa11y": "pa11y-ci",
-    "validate": "html-validate '*.html'",
-    "test": "npm run validate && npm run lighthouse && npm run pa11y"
-  },
+  "name": "cinar-grill-premium",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Enterprise-Grade Static Restaurant Website – Premium Quality (€20k+ Value)",
+  "author": "Cinar Grill",
+  "license": "MIT",
   "keywords": [
     "restaurant",
     "turkish",
-    "grill",
-    "food",
-    "static-site"
+    "astro",
+    "static-site",
+    "enterprise",
+    "a11y",
+    "wcag",
+    "performance",
+    "security"
   ],
-  "author": "Cinar Grill",
-  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "start": "npm run dev",
+    "serve": "npx http-server ./dist -p 8080 -c-1",
+    "lhci": "lhci autorun --config=lighthouserc.json",
+    "a11y": "pa11y-ci --config=.pa11yci.json",
+    "a11y:axe": "node scripts/axe-scan.js",
+    "links": "linkinator ./dist --recurse --skip 'api/*' --verbosity error",
+    "sri:gen": "node scripts/gen-sri.js",
+    "sri:verify": "node scripts/verify-sri.js",
+    "security:headers": "node scripts/check-security-headers.js",
+    "security:inline": "node scripts/no-inline-scanner.js",
+    "sbom": "cyclonedx-npm --output-file docs/reports/sbom.json",
+    "validate": "astro check && tsc --noEmit",
+    "test:quality": "npm run validate && npm run sri:verify && npm run security:inline",
+    "test:perf": "npm run lhci",
+    "test:a11y": "npm run a11y && npm run a11y:axe",
+    "test:security": "npm run security:headers && npm run sri:verify",
+    "test:all": "npm run test:quality && npm run test:perf && npm run test:a11y && npm run test:security && npm run links",
+    "reports": "node scripts/generate-reports.js",
+    "format": "prettier --write ."
+  },
+  "dependencies": {},
   "devDependencies": {
+    "@astrojs/check": "^0.9.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "@axe-core/cli": "^4.10.0",
+    "@cyclonedx/cyclonedx-npm": "^1.19.0",
     "@lhci/cli": "^0.13.0",
+    "@types/node": "^22.0.0",
+    "astro": "^4.15.0",
+    "axe-core": "^4.10.0",
     "html-validate": "^8.0.0",
-    "http-server": "^14.1.1",
+    "linkinator": "^6.0.0",
     "pa11y": "^8.0.0",
-    "pa11y-ci": "^3.1.0"
+    "pa11y-ci": "^3.1.0",
+    "prettier": "^3.3.0",
+    "prettier-plugin-astro": "^0.14.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "volta": {
+    "node": "20.17.0",
+    "npm": "10.8.0"
   }
 }

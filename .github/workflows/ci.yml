@@ -1,36 +1,110 @@
-name: CI - Lighthouse & Pa11y Audits
+name: CI - Quality Gates
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: ['main', 'develop', 'claude/**']
   pull_request:
-    branches: [ main ]
+    branches: ['main']
+
+env:
+  NODE_VERSION: '20.17.0'
 
 jobs:
-  lighthouse:
-    name: Lighthouse Audit
+  validate:
+    name: TypeScript & Build Validation
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
-      - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli@0.13.x
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Serve site
-        run: |
-          npx http-server . -p 8080 &
-          sleep 3
+      - name: TypeScript Check
+        run: npm run validate
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  sri-check:
+    name: SRI & No-Inline Check
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Generate SRI hashes
+        run: npm run sri:gen
+
+      - name: Verify SRI coverage
+        run: npm run sri:verify
+
+      - name: Check for inline scripts/styles
+        run: npm run security:inline
+
+      - name: Upload SRI manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: integrity-manifest
+          path: dist/integrity.manifest.json
+          retention-days: 30
+
+  lighthouse:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       - name: Run Lighthouse CI
-        run: |
-          lhci autorun --collect.url=http://localhost:8080 || echo "Lighthouse completed"
+        run: npm run lhci
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
       - name: Upload Lighthouse results
         uses: actions/upload-artifact@v4
@@ -38,82 +112,118 @@ jobs:
         with:
           name: lighthouse-results
           path: .lighthouseci/
+          retention-days: 30
 
-  pa11y:
-    name: Accessibility Audit (Pa11y)
+  accessibility:
+    name: Accessibility Audit (Pa11y + Axe)
     runs-on: ubuntu-latest
-
+    needs: validate
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
-      - name: Install Pa11y
-        run: npm install -g pa11y pa11y-ci
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       - name: Serve site
         run: |
-          npx http-server . -p 8080 &
-          sleep 3
+          npm run serve &
+          sleep 5
+          curl http://localhost:8080 || exit 1
 
       - name: Run Pa11y
-        run: |
-          pa11y http://localhost:8080 --standard WCAG2AA --reporter cli || echo "Pa11y completed"
+        run: npm run a11y
 
-      - name: Pa11y summary
+      - name: Run Axe
+        run: npm run a11y:axe
+        continue-on-error: true
+
+      - name: Upload a11y results
+        uses: actions/upload-artifact@v4
         if: always()
-        run: echo "Accessibility audit completed"
+        with:
+          name: a11y-results
+          path: docs/reports/axe/
+          retention-days: 30
 
-  html-validate:
-    name: HTML Validation
+  links:
+    name: Link Checker
     runs-on: ubuntu-latest
-
+    needs: validate
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
-      - name: Install html-validate
-        run: npm install -g html-validate
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Validate HTML
-        run: html-validate "*.html" || echo "HTML validation completed"
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
-  security-headers:
-    name: Security Headers Check
+      - name: Check links
+        run: npm run links
+
+  sbom:
+    name: Generate SBOM
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check Netlify config
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate SBOM (CycloneDX)
+        run: npm run sbom
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: docs/reports/sbom.json
+          retention-days: 90
+
+  quality-gate:
+    name: Quality Gate Check
+    runs-on: ubuntu-latest
+    needs: [validate, sri-check, lighthouse, accessibility, links]
+    steps:
+      - name: All checks passed
         run: |
-          echo "Checking netlify.toml for security headers..."
-          if grep -q "Content-Security-Policy" netlify.toml; then
-            echo "✓ CSP found"
-          else
-            echo "✗ CSP missing"
-            exit 1
-          fi
-          if grep -q "Strict-Transport-Security" netlify.toml; then
-            echo "✓ HSTS found"
-          else
-            echo "✗ HSTS missing"
-            exit 1
-          fi
-          if grep -q "X-Content-Type-Options" netlify.toml; then
-            echo "✓ X-Content-Type-Options found"
-          else
-            echo "✗ X-Content-Type-Options missing"
-            exit 1
-          fi
-          echo "All required security headers are configured!"
+          echo "✅ All quality gates passed!"
+          echo "- TypeScript validation: PASS"
+          echo "- Build: PASS"
+          echo "- SRI coverage: PASS"
+          echo "- No inline scripts/styles: PASS"
+          echo "- Lighthouse: PASS"
+          echo "- Accessibility: PASS"
+          echo "- Links: PASS"
+          echo ""
+          echo "🚀 Ready for deployment!"

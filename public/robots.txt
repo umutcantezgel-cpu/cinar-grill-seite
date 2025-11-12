@@ -1,0 +1,22 @@
+# robots.txt for Cinar Grill Restaurant
+
+User-agent: *
+Allow: /
+
+# Disallow admin/internal pages (if any)
+Disallow: /admin/
+Disallow: /.well-known/
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://www.cinar-grill.de/sitemap.xml
+
+# Crawl-delay for specific bots (optional)
+# User-agent: Googlebot
+# Crawl-delay: 0
+
+# Block bad bots (optional)
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+Disallow: /

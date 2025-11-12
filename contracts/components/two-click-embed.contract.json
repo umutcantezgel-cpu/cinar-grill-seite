@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinar-grill.de/schemas/components/two-click-embed.contract.json",
+  "type": "object",
+  "title": "Two-Click Embed Component Contract",
+  "version": "1.0.0",
+  "component": {
+    "name": "TwoClickEmbed",
+    "description": "DSGVO-compliant two-click embed for external content (Maps, Videos)",
+    "category": "consent-required"
+  },
+  "props": {
+    "type": {
+      "type": "string",
+      "enum": ["google-maps", "youtube"],
+      "required": true,
+      "description": "Type of embed service"
+    },
+    "embedUrl": {
+      "type": "string",
+      "required": true,
+      "description": "URL of the embed content"
+    },
+    "previewImage": {
+      "type": "string",
+      "required": false,
+      "description": "Preview image before consent (optional)"
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "description": "Accessible title for iframe"
+    },
+    "aspectRatio": {
+      "type": "string",
+      "enum": ["16/9", "4/3", "1/1", "21/9"],
+      "default": "16/9",
+      "description": "Aspect ratio for embed container"
+    }
+  },
+  "accessibility": {
+    "requirements": [
+      "Preview state must be keyboard accessible",
+      "Activate button must have clear label",
+      "Must announce state change to screen readers (live region)",
+      "Iframe must have descriptive title attribute",
+      "Focus must move to iframe after activation (optional)"
+    ],
+    "ariaRoles": ["region"],
+    "keyboardSupport": {
+      "Enter": "Activate embed (on button)",
+      "Space": "Activate embed (on button)"
+    }
+  },
+  "performance": {
+    "budgets": {
+      "js": "< 2kb (before iframe load)",
+      "css": "< 1kb"
+    },
+    "optimizations": [
+      "Preview image lazy-loaded (loading='lazy')",
+      "Iframe loaded only after consent",
+      "Use poster frame with LQIP"
+    ]
+  },
+  "consent": {
+    "required": true,
+    "category": "external",
+    "description": "Requires explicit user consent before loading third-party content",
+    "behavior": {
+      "beforeConsent": "Show preview with consent prompt",
+      "afterConsent": "Load iframe, store preference (localStorage)",
+      "onRevoke": "Remove iframe, show preview again"
+    }
+  },
+  "security": {
+    "iframe": {
+      "sandbox": {
+        "google-maps": "allow-scripts allow-same-origin allow-popups",
+        "youtube": "allow-scripts allow-same-origin allow-presentation"
+      },
+      "referrerPolicy": "no-referrer-when-downgrade",
+      "loading": "lazy",
+      "allow": {
+        "google-maps": "geolocation",
+        "youtube": "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      }
+    },
+    "csp": {
+      "requiresFrameSrc": true,
+      "allowedOrigins": {
+        "google-maps": ["https://www.google.com", "https://maps.google.com"],
+        "youtube": ["https://www.youtube-nocookie.com"]
+      }
+    }
+  },
+  "events": [
+    {
+      "name": "embed.activated",
+      "type": "com.cinar-grill.embed.loaded",
+      "trigger": "User clicked activate button",
+      "data": {
+        "embedType": "string",
+        "consentGiven": "boolean",
+        "timestamp": "ISO 8601"
+      }
+    },
+    {
+      "name": "embed.error",
+      "type": "com.cinar-grill.error.occurred",
+      "trigger": "Iframe failed to load",
+      "data": {
+        "errorType": "network",
+        "embedType": "string"
+      }
+    }
+  ],
+  "states": {
+    "preview": "Initial state, preview image + consent prompt",
+    "loading": "User activated, iframe loading",
+    "loaded": "Iframe successfully loaded and interactive",
+    "error": "Iframe failed to load, show error message"
+  },
+  "examples": [
+    {
+      "name": "Google Maps",
+      "code": "<TwoClickEmbed type='google-maps' embedUrl='https://www.google.com/maps/embed?...' title='Standort Cinar Grill' previewImage='/assets/img/map-preview.jpg' />"
+    },
+    {
+      "name": "YouTube Video",
+      "code": "<TwoClickEmbed type='youtube' embedUrl='https://www.youtube-nocookie.com/embed/VIDEO_ID' title='Cinar Grill Vorstellungsvideo' aspectRatio='16/9' />"
+    }
+  ]
+}

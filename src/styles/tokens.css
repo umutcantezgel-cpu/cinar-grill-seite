@@ -1,0 +1,317 @@
+/**
+ * Design Tokens System
+ * Tier 1: Primitive Tokens (Raw values)
+ * Tier 2: Semantic Tokens (Context-aware)
+ * Tier 3: Component Tokens (Component-specific)
+ */
+
+:root {
+  /* ============================================
+     TIER 1: PRIMITIVE TOKENS
+     Raw values, context-agnostic
+     ============================================ */
+
+  /* Colors - Brand */
+  --primitive-color-red-600: #c41e3a;
+  --primitive-color-red-700: #a01730;
+  --primitive-color-red-800: #7d1125;
+
+  --primitive-color-gold-400: #f4d788;
+  --primitive-color-gold-500: #d4af37;
+  --primitive-color-gold-600: #b8952f;
+
+  --primitive-color-gray-50: #f8f8f8;
+  --primitive-color-gray-100: #e8e8e8;
+  --primitive-color-gray-200: #d1d1d1;
+  --primitive-color-gray-300: #b0b0b0;
+  --primitive-color-gray-600: #666666;
+  --primitive-color-gray-700: #333333;
+  --primitive-color-gray-800: #2c2c2c;
+  --primitive-color-gray-900: #1a1a1a;
+
+  --primitive-color-white: #ffffff;
+  --primitive-color-black: #000000;
+
+  /* Colors - Semantic */
+  --primitive-color-green-600: #16a34a;
+  --primitive-color-yellow-600: #ca8a04;
+  --primitive-color-red-danger: #dc2626;
+
+  /* Spacing Scale (based on 4px grid) */
+  --primitive-space-1: 0.25rem;  /* 4px */
+  --primitive-space-2: 0.5rem;   /* 8px */
+  --primitive-space-3: 0.75rem;  /* 12px */
+  --primitive-space-4: 1rem;     /* 16px */
+  --primitive-space-5: 1.25rem;  /* 20px */
+  --primitive-space-6: 1.5rem;   /* 24px */
+  --primitive-space-8: 2rem;     /* 32px */
+  --primitive-space-10: 2.5rem;  /* 40px */
+  --primitive-space-12: 3rem;    /* 48px */
+  --primitive-space-16: 4rem;    /* 64px */
+  --primitive-space-20: 5rem;    /* 80px */
+  --primitive-space-24: 6rem;    /* 96px */
+
+  /* Font Families */
+  --primitive-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --primitive-font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  /* Font Sizes (modular scale: 1.250 - Major Third) */
+  --primitive-font-size-xs: 0.75rem;    /* 12px */
+  --primitive-font-size-sm: 0.875rem;   /* 14px */
+  --primitive-font-size-base: 1rem;     /* 16px */
+  --primitive-font-size-lg: 1.125rem;   /* 18px */
+  --primitive-font-size-xl: 1.25rem;    /* 20px */
+  --primitive-font-size-2xl: 1.5rem;    /* 24px */
+  --primitive-font-size-3xl: 1.875rem;  /* 30px */
+  --primitive-font-size-4xl: 2.25rem;   /* 36px */
+  --primitive-font-size-5xl: 3rem;      /* 48px */
+
+  /* Font Weights */
+  --primitive-font-weight-normal: 400;
+  --primitive-font-weight-medium: 500;
+  --primitive-font-weight-semibold: 600;
+  --primitive-font-weight-bold: 700;
+
+  /* Line Heights */
+  --primitive-line-height-tight: 1.25;
+  --primitive-line-height-snug: 1.375;
+  --primitive-line-height-normal: 1.5;
+  --primitive-line-height-relaxed: 1.625;
+  --primitive-line-height-loose: 1.75;
+
+  /* Border Radius */
+  --primitive-radius-sm: 0.25rem;   /* 4px */
+  --primitive-radius-md: 0.5rem;    /* 8px */
+  --primitive-radius-lg: 0.75rem;   /* 12px */
+  --primitive-radius-xl: 1rem;      /* 16px */
+  --primitive-radius-full: 9999px;
+
+  /* Shadows */
+  --primitive-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --primitive-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --primitive-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --primitive-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Transitions */
+  --primitive-transition-fast: 150ms;
+  --primitive-transition-base: 250ms;
+  --primitive-transition-slow: 350ms;
+  --primitive-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index Scale */
+  --primitive-z-base: 0;
+  --primitive-z-dropdown: 100;
+  --primitive-z-sticky: 200;
+  --primitive-z-fixed: 300;
+  --primitive-z-modal: 400;
+  --primitive-z-popover: 500;
+  --primitive-z-toast: 600;
+
+
+  /* ============================================
+     TIER 2: SEMANTIC TOKENS
+     Context-aware, maps to primitives
+     ============================================ */
+
+  /* Brand Colors */
+  --color-brand-primary: var(--primitive-color-red-600);
+  --color-brand-primary-hover: var(--primitive-color-red-700);
+  --color-brand-primary-active: var(--primitive-color-red-800);
+
+  --color-brand-accent: var(--primitive-color-gold-500);
+  --color-brand-accent-light: var(--primitive-color-gold-400);
+  --color-brand-accent-dark: var(--primitive-color-gold-600);
+
+  /* Neutral Colors */
+  --color-neutral-50: var(--primitive-color-gray-50);
+  --color-neutral-100: var(--primitive-color-gray-100);
+  --color-neutral-200: var(--primitive-color-gray-200);
+  --color-neutral-600: var(--primitive-color-gray-600);
+  --color-neutral-700: var(--primitive-color-gray-700);
+  --color-neutral-800: var(--primitive-color-gray-800);
+  --color-neutral-900: var(--primitive-color-gray-900);
+
+  /* Semantic Colors */
+  --color-success: var(--primitive-color-green-600);
+  --color-warning: var(--primitive-color-yellow-600);
+  --color-danger: var(--primitive-color-red-danger);
+
+  /* Surface Colors */
+  --color-surface-base: var(--primitive-color-white);
+  --color-surface-elevated: var(--primitive-color-gray-50);
+  --color-surface-dark: var(--primitive-color-gray-900);
+
+  /* Text Colors */
+  --color-text-primary: var(--primitive-color-gray-900);
+  --color-text-secondary: var(--primitive-color-gray-600);
+  --color-text-tertiary: var(--primitive-color-gray-300);
+  --color-text-inverse: var(--primitive-color-white);
+  --color-text-brand: var(--color-brand-primary);
+  --color-text-link: var(--color-brand-primary);
+  --color-text-link-hover: var(--color-brand-primary-hover);
+
+  /* Border Colors */
+  --color-border-subtle: var(--primitive-color-gray-200);
+  --color-border-default: var(--primitive-color-gray-300);
+  --color-border-strong: var(--primitive-color-gray-600);
+  --color-border-brand: var(--color-brand-primary);
+
+  /* Focus Ring */
+  --color-focus-ring: var(--color-brand-accent);
+  --color-focus-ring-offset: var(--primitive-color-white);
+
+  /* Typography */
+  --font-family-base: var(--primitive-font-sans);
+  --font-family-heading: var(--primitive-font-serif);
+
+  --font-size-body-sm: var(--primitive-font-size-sm);
+  --font-size-body: var(--primitive-font-size-base);
+  --font-size-body-lg: var(--primitive-font-size-lg);
+
+  --font-size-heading-sm: var(--primitive-font-size-xl);
+  --font-size-heading-md: var(--primitive-font-size-2xl);
+  --font-size-heading-lg: var(--primitive-font-size-3xl);
+  --font-size-heading-xl: var(--primitive-font-size-4xl);
+  --font-size-heading-2xl: var(--primitive-font-size-5xl);
+
+  --font-weight-body: var(--primitive-font-weight-normal);
+  --font-weight-medium: var(--primitive-font-weight-medium);
+  --font-weight-heading: var(--primitive-font-weight-semibold);
+  --font-weight-bold: var(--primitive-font-weight-bold);
+
+  --line-height-body: var(--primitive-line-height-relaxed);
+  --line-height-heading: var(--primitive-line-height-tight);
+
+  /* Spacing */
+  --space-section-sm: var(--primitive-space-12);
+  --space-section: var(--primitive-space-16);
+  --space-section-lg: var(--primitive-space-24);
+
+  --space-container-sm: var(--primitive-space-4);
+  --space-container: var(--primitive-space-6);
+  --space-container-lg: var(--primitive-space-8);
+
+  --space-element-sm: var(--primitive-space-2);
+  --space-element: var(--primitive-space-4);
+  --space-element-lg: var(--primitive-space-6);
+
+  /* Borders */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+  --border-radius-sm: var(--primitive-radius-sm);
+  --border-radius: var(--primitive-radius-md);
+  --border-radius-lg: var(--primitive-radius-lg);
+  --border-radius-full: var(--primitive-radius-full);
+
+  /* Shadows */
+  --shadow-card: var(--primitive-shadow-md);
+  --shadow-card-hover: var(--primitive-shadow-lg);
+  --shadow-modal: var(--primitive-shadow-xl);
+
+  /* Transitions */
+  --transition-fast: var(--primitive-transition-fast) var(--primitive-transition-ease);
+  --transition-base: var(--primitive-transition-base) var(--primitive-transition-ease);
+  --transition-slow: var(--primitive-transition-slow) var(--primitive-transition-ease);
+
+  /* Z-Index */
+  --z-navigation: var(--primitive-z-sticky);
+  --z-modal: var(--primitive-z-modal);
+  --z-consent-banner: var(--primitive-z-fixed);
+
+
+  /* ============================================
+     TIER 3: COMPONENT TOKENS
+     Component-specific tokens
+     ============================================ */
+
+  /* Button */
+  --button-padding-sm: var(--primitive-space-2) var(--primitive-space-4);
+  --button-padding: var(--primitive-space-3) var(--primitive-space-6);
+  --button-padding-lg: var(--primitive-space-4) var(--primitive-space-8);
+
+  --button-border-radius: var(--border-radius);
+  --button-font-weight: var(--font-weight-medium);
+  --button-transition: var(--transition-fast);
+
+  --button-min-height-sm: 2rem;     /* 32px */
+  --button-min-height: 2.75rem;     /* 44px - iOS minimum */
+  --button-min-height-lg: 3.5rem;   /* 56px */
+
+  --button-focus-ring-width: var(--border-width-medium);
+  --button-focus-ring-offset: 2px;
+
+  /* Input / Form Controls */
+  --input-padding: var(--primitive-space-3) var(--primitive-space-4);
+  --input-border-width: var(--border-width-thin);
+  --input-border-radius: var(--border-radius);
+  --input-border-color: var(--color-border-default);
+  --input-border-color-focus: var(--color-border-brand);
+  --input-background: var(--color-surface-base);
+  --input-min-height: var(--button-min-height);
+
+  /* Card */
+  --card-padding: var(--space-container);
+  --card-padding-lg: var(--space-container-lg);
+  --card-border-radius: var(--border-radius-lg);
+  --card-background: var(--color-surface-base);
+  --card-border: 1px solid var(--color-border-subtle);
+  --card-shadow: var(--shadow-card);
+  --card-shadow-hover: var(--shadow-card-hover);
+
+  /* Navigation */
+  --nav-height: 4rem;  /* 64px */
+  --nav-background: var(--color-surface-base);
+  --nav-border-bottom: 1px solid var(--color-border-subtle);
+  --nav-link-padding: var(--primitive-space-4);
+  --nav-link-color: var(--color-text-primary);
+  --nav-link-color-hover: var(--color-brand-primary);
+
+  /* Header / Hero */
+  --hero-padding-y: var(--space-section-lg);
+  --hero-min-height: 400px;
+
+  /* Footer */
+  --footer-background: var(--color-neutral-900);
+  --footer-color: var(--color-neutral-100);
+  --footer-padding-y: var(--space-section);
+
+  /* Focus Ring (Global) */
+  --focus-ring-width: var(--border-width-medium);
+  --focus-ring-color: var(--color-focus-ring);
+  --focus-ring-offset: 2px;
+  --focus-ring-offset-color: var(--color-focus-ring-offset);
+}
+
+/* ============================================
+   DARK MODE (Optional)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Override semantic tokens for dark mode if needed */
+    /* Currently not implemented as per brief */
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}
+
+/* ============================================
+   HIGH CONTRAST
+   ============================================ */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-default: var(--primitive-color-black);
+    --color-border-subtle: var(--primitive-color-gray-700);
+    --focus-ring-width: 3px;
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinar-grill.de/schemas/seo.routes.json",
+  "type": "object",
+  "title": "SEO Routes Configuration",
+  "version": "1.0.0",
+  "routes": [
+    {
+      "path": "/",
+      "slug": "index",
+      "priority": 1.0,
+      "changefreq": "weekly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Cinar Grill – Authentische Türkische Küche",
+        "description": "Erleben Sie authentische türkische Küche mit frischen Zutaten und traditionellen Rezepten. Täglich frisch vom Holzkohlengrill in modernem Ambiente.",
+        "keywords": ["türkisches Restaurant", "Grill", "Döner", "Kebap", "türkische Küche", "Holzkohlengrill", "authentisch", "frisch"],
+        "canonical": "https://www.cinar-grill.de/",
+        "robots": "index, follow",
+        "ogType": "website",
+        "ogImage": "/assets/img/og-home.jpg",
+        "twitterCard": "summary_large_image"
+      },
+      "structuredData": [
+        {
+          "@type": "Restaurant",
+          "name": "Cinar Grill",
+          "description": "Authentische türkische Küche mit frischen Zutaten",
+          "servesCuisine": "Turkish",
+          "priceRange": "€€",
+          "telephone": "+49-XXX-XXXXXXX",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "TODO: Straße Nr.",
+            "addressLocality": "TODO: Stadt",
+            "postalCode": "TODO: PLZ",
+            "addressCountry": "DE"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "reviewCount": "187",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "opens": "11:00",
+              "closes": "23:00"
+            }
+          ]
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "Cinar Grill",
+          "image": "https://www.cinar-grill.de/assets/img/logo.jpg",
+          "priceRange": "€€"
+        }
+      ]
+    },
+    {
+      "path": "/speisekarte",
+      "slug": "menu",
+      "priority": 0.9,
+      "changefreq": "monthly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Speisekarte – Türkische Spezialitäten",
+        "description": "Entdecken Sie unsere vielfältige Speisekarte mit authentischen türkischen Spezialitäten: Adana Kebap, İskender, Lahmacun, Pide und mehr.",
+        "keywords": ["Speisekarte", "Menü", "Adana Kebap", "İskender", "Lahmacun", "Pide", "türkische Gerichte"],
+        "canonical": "https://www.cinar-grill.de/speisekarte",
+        "robots": "index, follow",
+        "ogType": "website",
+        "ogImage": "/assets/img/og-menu.jpg"
+      },
+      "structuredData": [
+        {
+          "@type": "Menu",
+          "name": "Hauptspeisekarte",
+          "description": "Unsere türkischen Spezialitäten"
+        }
+      ]
+    },
+    {
+      "path": "/ueber-uns",
+      "slug": "about",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Über Uns – Tradition trifft Moderne",
+        "description": "Erfahren Sie mehr über Cinar Grill: Unsere Geschichte, unsere Werte und unsere Leidenschaft für authentische türkische Küche.",
+        "keywords": ["Über uns", "Geschichte", "Team", "Philosophie", "türkische Tradition"],
+        "canonical": "https://www.cinar-grill.de/ueber-uns",
+        "robots": "index, follow",
+        "ogType": "website"
+      },
+      "structuredData": [
+        {
+          "@type": "AboutPage",
+          "name": "Über Cinar Grill"
+        }
+      ]
+    },
+    {
+      "path": "/referenzen",
+      "slug": "testimonials",
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Kundenstimmen & Bewertungen",
+        "description": "Lesen Sie, was unsere Gäste über uns sagen. Authentische Bewertungen und Erfahrungen mit unserer türkischen Küche.",
+        "keywords": ["Bewertungen", "Kundenstimmen", "Testimonials", "Reviews", "Erfahrungen"],
+        "canonical": "https://www.cinar-grill.de/referenzen",
+        "robots": "index, follow",
+        "ogType": "website"
+      },
+      "structuredData": []
+    },
+    {
+      "path": "/kontakt",
+      "slug": "contact",
+      "priority": 0.8,
+      "changefreq": "monthly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Kontakt & Anfahrt",
+        "description": "Kontaktieren Sie uns für Reservierungen oder Fragen. Hier finden Sie unsere Adresse, Öffnungszeiten und Anfahrtsinformationen.",
+        "keywords": ["Kontakt", "Anfahrt", "Reservierung", "Öffnungszeiten", "Adresse", "Telefon"],
+        "canonical": "https://www.cinar-grill.de/kontakt",
+        "robots": "index, follow",
+        "ogType": "website"
+      },
+      "structuredData": [
+        {
+          "@type": "ContactPage",
+          "name": "Kontakt"
+        }
+      ]
+    },
+    {
+      "path": "/impressum",
+      "slug": "imprint",
+      "priority": 0.3,
+      "changefreq": "yearly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Impressum",
+        "description": "Impressum und Angaben gemäß § 5 TMG",
+        "canonical": "https://www.cinar-grill.de/impressum",
+        "robots": "noindex, follow"
+      },
+      "structuredData": []
+    },
+    {
+      "path": "/datenschutz",
+      "slug": "privacy",
+      "priority": 0.3,
+      "changefreq": "quarterly",
+      "lang": "de-DE",
+      "seo": {
+        "title": "Datenschutzerklärung",
+        "description": "Datenschutzerklärung gemäß DSGVO und TTDSG",
+        "canonical": "https://www.cinar-grill.de/datenschutz",
+        "robots": "noindex, follow"
+      },
+      "structuredData": []
+    },
+    {
+      "path": "/404",
+      "slug": "404",
+      "priority": 0.0,
+      "lang": "de-DE",
+      "seo": {
+        "title": "Seite nicht gefunden – 404",
+        "description": "Die gesuchte Seite konnte nicht gefunden werden.",
+        "robots": "noindex, nofollow"
+      },
+      "structuredData": []
+    },
+    {
+      "path": "/503",
+      "slug": "503",
+      "priority": 0.0,
+      "lang": "de-DE",
+      "seo": {
+        "title": "Wartungsarbeiten – 503",
+        "description": "Wir führen gerade Wartungsarbeiten durch. Bitte versuchen Sie es später erneut.",
+        "robots": "noindex, nofollow"
+      },
+      "structuredData": []
+    },
+    {
+      "path": "/offline",
+      "slug": "offline",
+      "priority": 0.0,
+      "lang": "de-DE",
+      "seo": {
+        "title": "Offline",
+        "description": "Sie sind offline. Bitte überprüfen Sie Ihre Internetverbindung.",
+        "robots": "noindex, nofollow"
+      },
+      "structuredData": []
+    }
+  ]
+}

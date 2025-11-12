@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinar-grill.de/schemas/components/button.contract.json",
+  "type": "object",
+  "title": "Button Component Contract",
+  "version": "1.0.0",
+  "component": {
+    "name": "Button",
+    "description": "Accessible, performant button component with variants",
+    "category": "ui-controls"
+  },
+  "props": {
+    "variant": {
+      "type": "string",
+      "enum": ["primary", "secondary", "ghost", "danger"],
+      "default": "primary",
+      "description": "Visual variant of the button"
+    },
+    "size": {
+      "type": "string",
+      "enum": ["sm", "md", "lg"],
+      "default": "md",
+      "description": "Button size"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["button", "submit", "reset"],
+      "default": "button",
+      "description": "HTML button type"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether button is disabled"
+    },
+    "loading": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether button shows loading state"
+    },
+    "ariaLabel": {
+      "type": "string",
+      "required": false,
+      "description": "Accessible label (use if button has only icon)"
+    },
+    "ariaDescribedBy": {
+      "type": "string",
+      "required": false,
+      "description": "ID of element describing the button"
+    },
+    "onClick": {
+      "type": "function",
+      "required": false,
+      "description": "Click handler"
+    }
+  },
+  "accessibility": {
+    "requirements": [
+      "Must have visible focus indicator (2px solid, high contrast)",
+      "Min target size 24x24px (WCAG 2.2 AA)",
+      "Must be keyboard accessible (Enter/Space)",
+      "Disabled state must have aria-disabled='true'",
+      "Loading state must announce to screen readers",
+      "Must not have both icon-only AND no aria-label"
+    ],
+    "ariaRoles": ["button"],
+    "keyboardSupport": {
+      "Enter": "Activate button",
+      "Space": "Activate button"
+    },
+    "focusManagement": {
+      "focusable": true,
+      "tabindex": 0,
+      "focusRing": "2px solid token(focus-ring)"
+    }
+  },
+  "performance": {
+    "budgets": {
+      "js": "< 1kb",
+      "css": "< 500 bytes"
+    },
+    "optimizations": [
+      "Use CSS for all visual states",
+      "No JavaScript for static buttons",
+      "Lazy load icon if external"
+    ]
+  },
+  "consent": {
+    "required": false,
+    "category": null,
+    "description": "Button itself requires no consent; handlers may trigger consent checks"
+  },
+  "variants": {
+    "primary": {
+      "background": "token(color-primary)",
+      "color": "token(color-on-primary)",
+      "hover": {
+        "background": "token(color-primary-hover)",
+        "transform": "scale(1.02)"
+      }
+    },
+    "secondary": {
+      "background": "token(color-secondary)",
+      "color": "token(color-on-secondary)",
+      "hover": {
+        "background": "token(color-secondary-hover)"
+      }
+    },
+    "ghost": {
+      "background": "transparent",
+      "color": "token(color-primary)",
+      "border": "1px solid token(color-primary)",
+      "hover": {
+        "background": "token(color-primary)",
+        "color": "token(color-on-primary)"
+      }
+    },
+    "danger": {
+      "background": "token(color-danger)",
+      "color": "token(color-on-danger)",
+      "hover": {
+        "background": "token(color-danger-hover)"
+      }
+    }
+  },
+  "states": {
+    "default": "Normal interactive state",
+    "hover": "Pointer hover (respects prefers-reduced-motion)",
+    "focus": "Keyboard focus (always visible ring)",
+    "active": "Being clicked/activated",
+    "disabled": "Non-interactive, aria-disabled=true, reduced opacity",
+    "loading": "Shows spinner, aria-busy=true, pointer-events: none"
+  },
+  "examples": [
+    {
+      "name": "Primary CTA",
+      "code": "<Button variant='primary' size='lg'>Jetzt reservieren</Button>"
+    },
+    {
+      "name": "Icon-only",
+      "code": "<Button variant='ghost' ariaLabel='Menü öffnen'><Icon name='menu' /></Button>"
+    },
+    {
+      "name": "Loading state",
+      "code": "<Button loading={true}>Wird gesendet...</Button>"
+    }
+  ]
+}

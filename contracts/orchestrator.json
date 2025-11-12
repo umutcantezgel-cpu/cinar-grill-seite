@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinar-grill.de/schemas/orchestrator.json",
+  "type": "object",
+  "title": "Layout & Composition Orchestrator",
+  "version": "1.0.0",
+  "layouts": {
+    "default": {
+      "name": "DefaultLayout",
+      "description": "Standard layout for all public pages",
+      "structure": [
+        {
+          "component": "ConsentBanner",
+          "slot": "pre-header",
+          "condition": {
+            "type": "consent-check",
+            "value": "not-given"
+          },
+          "priority": 1000
+        },
+        {
+          "component": "SkipLinks",
+          "slot": "pre-header",
+          "condition": null,
+          "priority": 999
+        },
+        {
+          "component": "Header",
+          "slot": "header",
+          "condition": null,
+          "priority": 100,
+          "children": [
+            {
+              "component": "Logo",
+              "slot": "header-logo"
+            },
+            {
+              "component": "Navigation",
+              "slot": "header-nav"
+            }
+          ]
+        },
+        {
+          "component": "Main",
+          "slot": "main",
+          "condition": null,
+          "priority": 50
+        },
+        {
+          "component": "Footer",
+          "slot": "footer",
+          "condition": null,
+          "priority": 10,
+          "children": [
+            {
+              "component": "FooterNav",
+              "slot": "footer-nav"
+            },
+            {
+              "component": "FooterLegal",
+              "slot": "footer-legal"
+            },
+            {
+              "component": "FooterSocial",
+              "slot": "footer-social"
+            }
+          ]
+        }
+      ]
+    },
+    "minimal": {
+      "name": "MinimalLayout",
+      "description": "Minimal layout for error pages (404, 503, offline)",
+      "structure": [
+        {
+          "component": "SkipLinks",
+          "slot": "pre-header",
+          "condition": null,
+          "priority": 999
+        },
+        {
+          "component": "HeaderMinimal",
+          "slot": "header",
+          "condition": null,
+          "priority": 100
+        },
+        {
+          "component": "Main",
+          "slot": "main",
+          "condition": null,
+          "priority": 50
+        },
+        {
+          "component": "FooterMinimal",
+          "slot": "footer",
+          "condition": null,
+          "priority": 10
+        }
+      ],
+      "constraints": {
+        "maxJsKb": 5,
+        "maxCssKb": 10,
+        "noExternalRequests": true,
+        "inlineCritical": true
+      }
+    },
+    "legal": {
+      "name": "LegalLayout",
+      "description": "Layout for legal pages (Impressum, Datenschutz)",
+      "extends": "default",
+      "modifications": {
+        "removeConsentBanner": false,
+        "simplifyHeader": false,
+        "addLegalNav": true
+      }
+    }
+  },
+  "pages": [
+    {
+      "route": "/",
+      "layout": "default",
+      "components": [
+        {
+          "name": "Hero",
+          "slot": "hero",
+          "props": {
+            "title": "Willkommen bei Cinar Grill",
+            "subtitle": "Authentische Türkische Küche",
+            "ctaText": "Speisekarte ansehen",
+            "ctaUrl": "/speisekarte",
+            "backgroundImage": "/assets/img/hero-home.jpg"
+          },
+          "performance": {
+            "preloadImage": true,
+            "priority": "high"
+          }
+        },
+        {
+          "name": "MenuHighlights",
+          "slot": "content-1",
+          "props": {
+            "title": "Unsere Spezialitäten",
+            "items": 4
+          }
+        },
+        {
+          "name": "TestimonialsSection",
+          "slot": "content-2",
+          "props": {
+            "title": "Das Sagen Unsere Gäste",
+            "maxItems": 6
+          }
+        },
+        {
+          "name": "CtaSection",
+          "slot": "content-3",
+          "props": {
+            "title": "Reservieren Sie jetzt",
+            "ctaText": "Kontakt aufnehmen",
+            "ctaUrl": "/kontakt"
+          }
+        }
+      ]
+    },
+    {
+      "route": "/speisekarte",
+      "layout": "default",
+      "components": [
+        {
+          "name": "PageHeader",
+          "slot": "page-header",
+          "props": {
+            "title": "Speisekarte",
+            "subtitle": "Unsere türkischen Spezialitäten"
+          }
+        },
+        {
+          "name": "MenuGrid",
+          "slot": "content-1",
+          "props": {
+            "categories": ["Vorspeisen", "Hauptgerichte", "Beilagen", "Desserts", "Getränke"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "/kontakt",
+      "layout": "default",
+      "components": [
+        {
+          "name": "PageHeader",
+          "slot": "page-header",
+          "props": {
+            "title": "Kontakt",
+            "subtitle": "Wir freuen uns auf Ihre Nachricht"
+          }
+        },
+        {
+          "name": "ContactForm",
+          "slot": "content-1",
+          "props": {
+            "endpoint": "/api/contact",
+            "fields": ["name", "email", "phone", "message"],
+            "honeypot": true
+          }
+        },
+        {
+          "name": "TwoClickEmbed",
+          "slot": "content-2",
+          "props": {
+            "type": "google-maps",
+            "embedUrl": "TODO: Google Maps Embed URL",
+            "previewImage": "/assets/img/map-preview.jpg"
+          }
+        },
+        {
+          "name": "ContactInfo",
+          "slot": "sidebar",
+          "props": {
+            "showAddress": true,
+            "showPhone": true,
+            "showEmail": true,
+            "showHours": true
+          }
+        }
+      ]
+    },
+    {
+      "route": "/404",
+      "layout": "minimal",
+      "components": [
+        {
+          "name": "ErrorMessage",
+          "slot": "content",
+          "props": {
+            "code": "404",
+            "title": "Seite nicht gefunden",
+            "message": "Die gesuchte Seite konnte leider nicht gefunden werden.",
+            "ctaText": "Zur Startseite",
+            "ctaUrl": "/"
+          }
+        }
+      ]
+    },
+    {
+      "route": "/503",
+      "layout": "minimal",
+      "components": [
+        {
+          "name": "ErrorMessage",
+          "slot": "content",
+          "props": {
+            "code": "503",
+            "title": "Wartungsarbeiten",
+            "message": "Wir führen gerade Wartungsarbeiten durch. Bitte versuchen Sie es später erneut.",
+            "retryAfter": 3600
+          }
+        }
+      ]
+    }
+  ],
+  "bindings": {
+    "globalData": {
+      "siteName": "{{manifest.app.name}}",
+      "siteUrl": "{{manifest.seo.siteUrl}}",
+      "contact": "{{manifest.app.contact}}",
+      "social": "{{manifest.app.social}}",
+      "openingHours": "{{manifest.app.openingHours}}"
+    },
+    "seo": {
+      "source": "contracts/seo.routes.json",
+      "binding": "route.seo"
+    },
+    "consent": {
+      "source": "contracts/manifest.webspec.json",
+      "binding": "consent"
+    }
+  },
+  "conditions": {
+    "consent-check": {
+      "description": "Check if user has given consent",
+      "evaluator": "ConsentManager.hasConsent(category)"
+    },
+    "feature-flag": {
+      "description": "Check if feature is enabled",
+      "evaluator": "FeatureFlags.isEnabled(flag)"
+    },
+    "auth-check": {
+      "description": "Check if user is authenticated",
+      "evaluator": "AuthManager.isAuthenticated()"
+    }
+  }
+}
