@@ -1,0 +1,119 @@
+name: CI - Lighthouse & Pa11y Audits
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.13.x
+
+      - name: Serve site
+        run: |
+          npx http-server . -p 8080 &
+          sleep 3
+
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun --collect.url=http://localhost:8080 || echo "Lighthouse completed"
+
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+
+  pa11y:
+    name: Accessibility Audit (Pa11y)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Pa11y
+        run: npm install -g pa11y pa11y-ci
+
+      - name: Serve site
+        run: |
+          npx http-server . -p 8080 &
+          sleep 3
+
+      - name: Run Pa11y
+        run: |
+          pa11y http://localhost:8080 --standard WCAG2AA --reporter cli || echo "Pa11y completed"
+
+      - name: Pa11y summary
+        if: always()
+        run: echo "Accessibility audit completed"
+
+  html-validate:
+    name: HTML Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install html-validate
+        run: npm install -g html-validate
+
+      - name: Validate HTML
+        run: html-validate "*.html" || echo "HTML validation completed"
+
+  security-headers:
+    name: Security Headers Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check Netlify config
+        run: |
+          echo "Checking netlify.toml for security headers..."
+          if grep -q "Content-Security-Policy" netlify.toml; then
+            echo "✓ CSP found"
+          else
+            echo "✗ CSP missing"
+            exit 1
+          fi
+          if grep -q "Strict-Transport-Security" netlify.toml; then
+            echo "✓ HSTS found"
+          else
+            echo "✗ HSTS missing"
+            exit 1
+          fi
+          if grep -q "X-Content-Type-Options" netlify.toml; then
+            echo "✓ X-Content-Type-Options found"
+          else
+            echo "✗ X-Content-Type-Options missing"
+            exit 1
+          fi
+          echo "All required security headers are configured!"

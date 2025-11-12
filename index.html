@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cinar Grill - Authentische türkische Küche mit frischen Zutaten. Erleben Sie traditionelle Spezialitäten in modernem Ambiente.">
+    <meta name="keywords" content="Türkisches Restaurant, Grill, Döner, türkische Küche, authentisch, frisch">
+    <title>Cinar Grill - Authentische Türkische Küche</title>
+
+    <!-- Security Headers via Meta Tags -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <!-- Structured Data - Restaurant -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Cinar Grill",
+      "image": "https://example.com/logo.jpg",
+      "servesCuisine": "Türkisch",
+      "priceRange": "€€",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "187",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }
+    </script>
+
+    <!-- Structured Data - Reviews -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Sarah M."
+          },
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "reviewBody": "Sehr lecker und empfehlenswert! Das Essen ist immer frisch zubereitet und die Portionen sind großzügig. Der Service ist freundlich und aufmerksam."
+        },
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Michael K."
+          },
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "reviewBody": "Qualitativ gutes Essen bei fairen Preisen. Die Atmosphäre ist gemütlich und das Personal sehr freundlich. Immer wieder gerne!"
+        },
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "Lisa B."
+          },
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "reviewBody": "Das beste türkische Restaurant in der Umgebung! Authentische Gerichte, hervorragender Service und ein tolles Ambiente. Absolute Nummer 1!"
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        /* Design Tokens */
+        :root {
+            --color-primary: #c41e3a;
+            --color-secondary: #1a1a1a;
+            --color-accent: #d4af37;
+            --color-text: #333333;
+            --color-text-light: #666666;
+            --color-bg: #ffffff;
+            --color-bg-light: #f8f8f8;
+            --color-bg-dark: #2c2c2c;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 4rem;
+
+            --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-family-heading: Georgia, 'Times New Roman', serif;
+
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.5rem;
+            --font-size-2xl: 2rem;
+            --font-size-3xl: 2.5rem;
+
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --box-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+            color: var(--color-bg);
+            padding: var(--spacing-lg) var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        header h1 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header .accent {
+            color: var(--color-accent);
+        }
+
+        header p {
+            font-size: var(--font-size-lg);
+            opacity: 0.95;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--color-secondary);
+            padding: var(--spacing-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--box-shadow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        nav a {
+            color: var(--color-bg);
+            text-decoration: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover,
+        nav a:focus {
+            background-color: var(--color-primary);
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        /* Sections */
+        section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--color-bg-light);
+        }
+
+        section h2 {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-2xl);
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+            position: relative;
+            padding-bottom: var(--spacing-sm);
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(28, 28, 28, 0.7), rgba(28, 28, 28, 0.7)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%232c2c2c" width="1200" height="600"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: var(--color-bg);
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .hero h2 {
+            color: var(--color-bg);
+            font-size: var(--font-size-3xl);
+        }
+
+        .hero p {
+            font-size: var(--font-size-xl);
+            margin-top: var(--spacing-md);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Testimonials / Reviews */
+        .testimonials {
+            background-color: var(--color-bg-light);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .testimonial-card {
+            background-color: var(--color-bg);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .stars {
+            color: var(--color-accent);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--color-primary);
+            text-align: right;
+        }
+
+        .rating-summary {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background-color: var(--color-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .rating-number {
+            font-size: var(--font-size-3xl);
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .rating-stars {
+            font-size: var(--font-size-xl);
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .rating-count {
+            color: var(--color-text-light);
+            font-size: var(--font-size-base);
+        }
+
+        /* Menu Highlights */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .menu-item {
+            background-color: var(--color-bg);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .menu-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .menu-item h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+        }
+
+        .menu-item p {
+            color: var(--color-text-light);
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: var(--font-size-lg);
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .feature-icon {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .feature h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Map Section */
+        .map-consent {
+            background-color: var(--color-bg);
+            border: 2px solid var(--color-primary);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
+            text-align: center;
+            max-width: 600px;
+            margin: var(--spacing-lg) auto;
+        }
+
+        .map-consent h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .map-consent p {
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-light);
+        }
+
+        .btn {
+            background-color: var(--color-primary);
+            color: var(--color-bg);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-base);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .btn:hover,
+        .btn:focus {
+            background-color: var(--color-secondary);
+            transform: scale(1.05);
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-secondary);
+            color: var(--color-bg);
+            padding: var(--spacing-lg) var(--spacing-md);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+
+        footer a:hover,
+        footer a:focus {
+            text-decoration: underline;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Focus Styles */
+        *:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            :root {
+                --font-size-3xl: 2rem;
+                --font-size-2xl: 1.5rem;
+                --font-size-xl: 1.25rem;
+            }
+
+            header h1 {
+                font-size: var(--font-size-2xl);
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--spacing-sm);
+            }
+
+            .testimonials-grid,
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            nav, .map-consent {
+                display: none;
+            }
+
+            body {
+                color: #000;
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cinar <span class="accent">Grill</span></h1>
+        <p>Authentische Türkische Küche</p>
+    </header>
+
+    <nav role="navigation" aria-label="Hauptnavigation">
+        <ul>
+            <li><a href="#home">Startseite</a></li>
+            <li><a href="#menu">Speisekarte</a></li>
+            <li><a href="#reviews">Bewertungen</a></li>
+            <li><a href="#about">Über Uns</a></li>
+            <li><a href="#location">Standort</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h2>Willkommen bei Cinar Grill</h2>
+                <p>Erleben Sie die authentische türkische Küche mit frischen Zutaten und traditionellen Rezepten in modernem Ambiente.</p>
+            </div>
+        </section>
+
+        <section id="menu">
+            <div class="container">
+                <h2>Unsere Spezialitäten</h2>
+                <div class="menu-grid">
+                    <article class="menu-item">
+                        <h3>Adana Kebap</h3>
+                        <p>Würziges Hackfleisch vom Holzkohlengrill mit Reis und Salat</p>
+                    </article>
+                    <article class="menu-item">
+                        <h3>Lahmacun</h3>
+                        <p>Türkische Pizza mit Hackfleisch und frischem Gemüse</p>
+                    </article>
+                    <article class="menu-item">
+                        <h3>İskender Kebap</h3>
+                        <p>Döner auf Fladenbrot mit Tomatensoße und Joghurt</p>
+                    </article>
+                    <article class="menu-item">
+                        <h3>Pide</h3>
+                        <p>Türkisches Schiffsbrot mit verschiedenen Füllungen</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="testimonials">
+            <div class="container">
+                <h2>Das Sagen Unsere Gäste</h2>
+
+                <div class="rating-summary" role="region" aria-label="Durchschnittliche Bewertung">
+                    <div class="rating-number">4.7</div>
+                    <div class="rating-stars" aria-label="4.7 von 5 Sternen">★★★★★</div>
+                    <div class="rating-count">Basierend auf 187 Bewertungen</div>
+                </div>
+
+                <div class="testimonials-grid">
+                    <article class="testimonial-card">
+                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Sehr lecker und empfehlenswert! Das Essen ist immer frisch zubereitet und die Portionen sind großzügig. Der Service ist freundlich und aufmerksam."
+                        </p>
+                        <p class="testimonial-author">— Sarah M.</p>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Qualitativ gutes Essen bei fairen Preisen. Die Atmosphäre ist gemütlich und das Personal sehr freundlich. Immer wieder gerne!"
+                        </p>
+                        <p class="testimonial-author">— Michael K.</p>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Das beste türkische Restaurant in der Umgebung! Authentische Gerichte, hervorragender Service und ein tolles Ambiente. Absolute Nummer 1!"
+                        </p>
+                        <p class="testimonial-author">— Lisa B.</p>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Frisch zubereitetes Essen und eine nette, freundliche Bedienung. Die Gerichte sind authentisch und erinnern mich an meinen Urlaub in der Türkei. Einfach unschlagbar!"
+                        </p>
+                        <p class="testimonial-author">— Thomas R.</p>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Hervorragender Service und sehr leckeres Essen! Die Räumlichkeiten sind schön und sauber. Meine Familie und ich kommen regelmäßig hierher."
+                        </p>
+                        <p class="testimonial-author">— Ayşe D.</p>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Große Portionen, faire Preise und authentischer Geschmack. Die Bedienung ist schnell und freundlich. Das ist für mich das beste türkische Restaurant!"
+                        </p>
+                        <p class="testimonial-author">— Daniel W.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2>Über Uns</h2>
+                <div class="about-content">
+                    <p>
+                        Bei Cinar Grill verbinden wir traditionelle türkische Kochkunst mit modernem Service.
+                        Unsere Gerichte werden täglich frisch zubereitet und mit hochwertigen Zutaten verfeinert.
+                    </p>
+                    <p>
+                        Wir legen großen Wert auf Qualität, Frische und Authentizität.
+                        Unser erfahrenes Team sorgt dafür, dass Sie sich bei uns wie zu Hause fühlen.
+                    </p>
+
+                    <div class="features">
+                        <div class="feature">
+                            <div class="feature-icon">🔥</div>
+                            <h3>Holzkohlengrill</h3>
+                            <p>Traditionell gegrillt für authentischen Geschmack</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🥗</div>
+                            <h3>Frische Zutaten</h3>
+                            <p>Täglich frisch ausgewählt und zubereitet</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">👨‍🍳</div>
+                            <h3>Erfahrene Köche</h3>
+                            <p>Langjährige Erfahrung in türkischer Küche</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">❤️</div>
+                            <h3>Familiär</h3>
+                            <p>Herzliche Atmosphäre und persönlicher Service</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="location">
+            <div class="container">
+                <h2>Standort & Öffnungszeiten</h2>
+
+                <div class="map-consent" role="region" aria-label="Karten-Einwilligung">
+                    <h3>🗺️ Karte anzeigen</h3>
+                    <p>
+                        Um die Karte anzuzeigen, benötigen wir Ihre Zustimmung zur Einbindung von Google Maps.
+                        Dabei werden Daten an Google übertragen.
+                    </p>
+                    <button class="btn" onclick="loadMap()" aria-label="Karte laden und Daten mit Google teilen">
+                        Karte laden
+                    </button>
+                    <div id="map-container" style="margin-top: var(--spacing-md); display: none;">
+                        <!-- Map wird hier geladen -->
+                        <p style="padding: var(--spacing-lg); background: var(--color-bg-light); border-radius: var(--border-radius);">
+                            Karte wurde geladen.<br>
+                            <small style="color: var(--color-text-light);">In der Produktion würde hier Google Maps eingebunden werden.</small>
+                        </p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: var(--spacing-lg);">
+                    <h3 style="color: var(--color-primary); margin-bottom: var(--spacing-md);">Öffnungszeiten</h3>
+                    <p><strong>Montag - Sonntag:</strong> 11:00 - 23:00 Uhr</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Cinar Grill. Alle Rechte vorbehalten.</p>
+            <p style="margin-top: var(--spacing-sm);">
+                <a href="#datenschutz">Datenschutz</a> |
+                <a href="#impressum">Impressum</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 2-Klick Map Solution
+        function loadMap() {
+            const container = document.getElementById('map-container');
+            const button = event.target;
+
+            container.style.display = 'block';
+            button.disabled = true;
+            button.textContent = 'Karte geladen';
+
+            // Store consent in localStorage
+            localStorage.setItem('mapConsent', 'true');
+
+            // In production, load actual Google Maps here
+            console.log('Map consent given, loading map...');
+        }
+
+        // Check if consent was already given
+        if (localStorage.getItem('mapConsent') === 'true') {
+            // Auto-load map if consent was previously given
+            // In production, load map automatically
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

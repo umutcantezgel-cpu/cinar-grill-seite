@@ -1,0 +1,29 @@
+{
+  "name": "cinar-grill-seite",
+  "version": "1.0.0",
+  "description": "Produktionsreifes Restaurant-Projekt für Cinar Grill mit authentischen türkischen Restaurant-Referenzen",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 8080",
+    "lighthouse": "lhci autorun",
+    "pa11y": "pa11y-ci",
+    "validate": "html-validate '*.html'",
+    "test": "npm run validate && npm run lighthouse && npm run pa11y"
+  },
+  "keywords": [
+    "restaurant",
+    "turkish",
+    "grill",
+    "food",
+    "static-site"
+  ],
+  "author": "Cinar Grill",
+  "license": "MIT",
+  "devDependencies": {
+    "@lhci/cli": "^0.13.0",
+    "html-validate": "^8.0.0",
+    "http-server": "^14.1.1",
+    "pa11y": "^8.0.0",
+    "pa11y-ci": "^3.1.0"
+  }
+}
