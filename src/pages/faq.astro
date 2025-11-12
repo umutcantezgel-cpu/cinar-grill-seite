@@ -1,0 +1,155 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Accordion from '@/components/Accordion.astro';
+import type { SEOProps } from '@/types/seo';
+
+const seo: SEOProps = {
+  title: 'Häufig gestellte Fragen (FAQ)',
+  description: 'Antworten auf häufig gestellte Fragen zu unserem Restaurant, Speisekarte, Reservierungen und Lieferservice.',
+  keywords: ['FAQ', 'Fragen', 'Antworten', 'Restaurant', 'Reservierung', 'Lieferung'],
+  canonical: 'https://www.cinar-grill.de/faq',
+  ogType: 'website',
+};
+
+const faqItems = [
+  {
+    id: 'faq-1',
+    title: 'Muss ich reservieren?',
+    content: 'Eine Reservierung ist nicht zwingend erforderlich, wird aber besonders an Wochenenden und Feiertagen empfohlen. Sie können telefonisch unter +49 XXX XXXXXXX oder per E-Mail reservieren.',
+  },
+  {
+    id: 'faq-2',
+    title: 'Bieten Sie vegetarische oder vegane Gerichte an?',
+    content: 'Ja, wir haben eine große Auswahl an vegetarischen Gerichten. Vegane Optionen können auf Anfrage zubereitet werden. Bitte informieren Sie uns bei der Bestellung.',
+  },
+  {
+    id: 'faq-3',
+    title: 'Haben Sie einen Lieferservice?',
+    content: 'Ja, wir liefern innerhalb eines Umkreises von 5 km. Die Lieferung ist ab einem Bestellwert von 15 € kostenlos. Unter 15 € berechnen wir eine Liefergebühr von 2 €.',
+  },
+  {
+    id: 'faq-4',
+    title: 'Kann ich auch außer Haus bestellen?',
+    content: 'Selbstverständlich! Sie können telefonisch oder online bestellen und Ihre Bestellung bei uns abholen. Wir bereiten alles frisch für Sie zu.',
+  },
+  {
+    id: 'faq-5',
+    title: 'Gibt es Parkplätze in der Nähe?',
+    content: 'Ja, es gibt kostenpflichtige Parkplätze direkt vor dem Restaurant sowie kostenlose Parkplätze in den umliegenden Straßen.',
+  },
+  {
+    id: 'faq-6',
+    title: 'Sind Sie auch für private Feiern buchbar?',
+    content: 'Ja, wir bieten Catering und Räumlichkeiten für private Veranstaltungen an. Kontaktieren Sie uns für ein individuelles Angebot.',
+  },
+  {
+    id: 'faq-7',
+    title: 'Welche Zahlungsmethoden akzeptieren Sie?',
+    content: 'Wir akzeptieren Bargeld, EC-Karte, alle gängigen Kreditkarten sowie kontaktlose Zahlungen (Apple Pay, Google Pay).',
+  },
+  {
+    id: 'faq-8',
+    title: 'Verwenden Sie Halal-Fleisch?',
+    content: 'Ja, wir verwenden ausschließlich Halal-zertifiziertes Fleisch von regionalen Lieferanten.',
+  },
+];
+
+// FAQPage Structured Data
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.title,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.content,
+    },
+  })),
+};
+---
+
+<BaseLayout seo={seo} structuredData={[faqSchema]}>
+  <section class="section">
+    <div class="container container-sm">
+      <h1 class="page-title">Häufig gestellte Fragen</h1>
+      <p class="page-intro">
+        Hier finden Sie Antworten auf die am häufigsten gestellten Fragen zu unserem Restaurant, Speisekarte, Reservierungen und Services.
+      </p>
+
+      <Accordion items={faqItems} allowMultiple={false} />
+
+      <div class="contact-cta">
+        <h2>Ihre Frage ist nicht dabei?</h2>
+        <p>Kontaktieren Sie uns gerne direkt – wir helfen Ihnen gerne weiter!</p>
+        <a href="/kontakt" class="button button-primary">
+          Kontakt aufnehmen
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: var(--space-element);
+  }
+
+  .page-intro {
+    text-align: center;
+    font-size: var(--font-size-body-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-container-lg);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-cta {
+    margin-top: var(--space-container-lg);
+    padding: var(--space-container-lg);
+    background: var(--color-neutral-50);
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+  }
+
+  .contact-cta h2 {
+    color: var(--color-brand-primary);
+    margin-bottom: var(--space-element);
+  }
+
+  .contact-cta p {
+    margin-bottom: var(--space-container);
+    color: var(--color-text-secondary);
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--button-padding);
+    min-height: var(--button-min-height);
+    border-radius: var(--button-border-radius);
+    font-weight: var(--button-font-weight);
+    text-decoration: none;
+    transition: var(--button-transition);
+  }
+
+  .button-primary {
+    background-color: var(--color-brand-primary);
+    color: var(--color-text-inverse);
+  }
+
+  .button-primary:hover,
+  .button-primary:focus {
+    background-color: var(--color-brand-primary-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .contact-cta {
+      background: var(--color-neutral-100);
+    }
+  }
+</style>

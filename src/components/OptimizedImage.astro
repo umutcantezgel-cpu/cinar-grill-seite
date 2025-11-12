@@ -1,0 +1,92 @@
+---
+/**
+ * Optimized Image Component
+ * - AVIF/WebP with fallback
+ * - Responsive with srcset
+ * - Lazy loading
+ * - LQIP (Low Quality Image Placeholder)
+ * - fetchpriority support
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  sizes?: string;
+  priority?: boolean;  // If true, use fetchpriority="high" and disable lazy
+  class?: string;
+  lqip?: string;  // Base64 or URL for low-quality placeholder
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  sizes = '100vw',
+  priority = false,
+  class: className = '',
+  lqip,
+} = Astro.props;
+
+// Generate responsive srcset (TODO: actual image optimization in build)
+const srcWebp = src.replace(/\.(jpg|jpeg|png)$/, '.webp');
+const srcAvif = src.replace(/\.(jpg|jpeg|png)$/, '.avif');
+
+// Generate srcset for different sizes (2x, 1x, 0.5x)
+const srcset1x = src;
+const srcset2x = src;  // TODO: Generate actual 2x version
+const srcset05x = src; // TODO: Generate actual 0.5x version
+
+const loading = priority ? 'eager' : 'lazy';
+const fetchpriority = priority ? 'high' : 'auto';
+const decoding = priority ? 'sync' : 'async';
+---
+
+<picture>
+  <!-- AVIF (best compression, modern browsers) -->
+  <source
+    type="image/avif"
+    srcset={`${srcAvif} ${width}w`}
+    sizes={sizes}
+  />
+
+  <!-- WebP (good compression, wide support) -->
+  <source
+    type="image/webp"
+    srcset={`${srcWebp} ${width}w`}
+    sizes={sizes}
+  />
+
+  <!-- Fallback (JPEG/PNG) -->
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+    fetchpriority={fetchpriority}
+    class={className}
+    style={lqip ? `background-image: url(${lqip}); background-size: cover;` : undefined}
+  />
+</picture>
+
+<style>
+  picture {
+    display: contents;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* LQIP blur effect */
+  img[style*="background-image"] {
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+</style>

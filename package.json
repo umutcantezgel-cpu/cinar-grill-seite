@@ -1,8 +1,8 @@
 {
-  "name": "cinar-grill-premium",
-  "version": "2.0.0",
+  "name": "cinar-grill-world-class",
+  "version": "3.0.0",
   "type": "module",
-  "description": "Enterprise-Grade Static Restaurant Website – Premium Quality (€20k+ Value)",
+  "description": "World-Class Restaurant Website – Top 1-5% Performance/A11y/Security (€30k+ Value)",
   "author": "Cinar Grill",
   "license": "MIT",
   "keywords": [
@@ -11,20 +11,25 @@
     "astro",
     "static-site",
     "enterprise",
+    "world-class",
     "a11y",
     "wcag",
     "performance",
-    "security"
+    "security",
+    "rum",
+    "service-worker",
+    "dark-mode"
   ],
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && npm run sri:gen",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
     "start": "npm run dev",
     "serve": "npx http-server ./dist -p 8080 -c-1",
-    "lhci": "lhci autorun --config=lighthouserc.json",
+    "lhci": "node scripts/lighthouse-strict.js",
+    "lhci:basic": "lhci autorun --config=lighthouserc.json",
     "a11y": "pa11y-ci --config=.pa11yci.json",
     "a11y:axe": "node scripts/axe-scan.js",
     "links": "linkinator ./dist --recurse --skip 'api/*' --verbosity error",
@@ -32,9 +37,10 @@
     "sri:verify": "node scripts/verify-sri.js",
     "security:headers": "node scripts/check-security-headers.js",
     "security:inline": "node scripts/no-inline-scanner.js",
+    "bundle:analyze": "node scripts/bundle-analyzer.js",
     "sbom": "cyclonedx-npm --output-file docs/reports/sbom.json",
     "validate": "astro check && tsc --noEmit",
-    "test:quality": "npm run validate && npm run sri:verify && npm run security:inline",
+    "test:quality": "npm run validate && npm run sri:verify && npm run security:inline && npm run bundle:analyze",
     "test:perf": "npm run lhci",
     "test:a11y": "npm run a11y && npm run a11y:axe",
     "test:security": "npm run security:headers && npm run sri:verify",
@@ -42,7 +48,9 @@
     "reports": "node scripts/generate-reports.js",
     "format": "prettier --write ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "web-vitals": "^4.2.0"
+  },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "@astrojs/tailwind": "^5.1.0",

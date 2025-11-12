@@ -1,0 +1,274 @@
+---
+/**
+ * Accessible Accordion Component
+ * WCAG 2.2 AA Compliant with ARIA
+ * Supports keyboard navigation (Tab, Enter, Space, Arrow keys)
+ */
+
+interface AccordionItem {
+  id: string;
+  title: string;
+  content: string;
+}
+
+interface Props {
+  items: AccordionItem[];
+  allowMultiple?: boolean;  // Allow multiple panels open at once
+  class?: string;
+}
+
+const { items, allowMultiple = false, class: className = '' } = Astro.props;
+const accordionId = `accordion-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`accordion ${className}`} id={accordionId} role="region" aria-label="Frequently Asked Questions">
+  {items.map((item, index) => (
+    <div class="accordion-item" key={item.id}>
+      <h3 class="accordion-header">
+        <button
+          class="accordion-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls={`panel-${item.id}`}
+          id={`trigger-${item.id}`}
+          data-index={index}
+        >
+          <span class="accordion-title">{item.title}</span>
+          <svg
+            class="accordion-icon"
+            aria-hidden="true"
+            focusable="false"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 11L3 6h10z" fill="currentColor" />
+          </svg>
+        </button>
+      </h3>
+
+      <div
+        class="accordion-panel"
+        id={`panel-${item.id}`}
+        role="region"
+        aria-labelledby={`trigger-${item.id}`}
+        hidden
+      >
+        <div class="accordion-content">
+          {item.content}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  class Accordion {
+    constructor(element: HTMLElement) {
+      this.element = element;
+      this.triggers = Array.from(element.querySelectorAll('.accordion-trigger'));
+      this.allowMultiple = element.dataset.allowMultiple === 'true';
+
+      this.init();
+    }
+
+    element: HTMLElement;
+    triggers: HTMLButtonElement[];
+    allowMultiple: boolean;
+
+    init() {
+      this.triggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => this.toggle(trigger));
+        trigger.addEventListener('keydown', (e) => this.handleKeydown(e, trigger));
+      });
+    }
+
+    toggle(trigger: HTMLButtonElement) {
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+      const panel = document.getElementById(trigger.getAttribute('aria-controls')!);
+
+      if (!this.allowMultiple) {
+        // Close all other panels
+        this.triggers.forEach((t) => {
+          if (t !== trigger) {
+            this.close(t);
+          }
+        });
+      }
+
+      if (isExpanded) {
+        this.close(trigger);
+      } else {
+        this.open(trigger);
+      }
+    }
+
+    open(trigger: HTMLButtonElement) {
+      const panel = document.getElementById(trigger.getAttribute('aria-controls')!);
+      if (!panel) return;
+
+      trigger.setAttribute('aria-expanded', 'true');
+      panel.removeAttribute('hidden');
+    }
+
+    close(trigger: HTMLButtonElement) {
+      const panel = document.getElementById(trigger.getAttribute('aria-controls')!);
+      if (!panel) return;
+
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('hidden', '');
+    }
+
+    handleKeydown(event: KeyboardEvent, trigger: HTMLButtonElement) {
+      const index = parseInt(trigger.dataset.index || '0', 10);
+
+      switch (event.key) {
+        case 'ArrowDown':
+        case 'ArrowRight':
+          event.preventDefault();
+          this.focusNext(index);
+          break;
+
+        case 'ArrowUp':
+        case 'ArrowLeft':
+          event.preventDefault();
+          this.focusPrevious(index);
+          break;
+
+        case 'Home':
+          event.preventDefault();
+          this.triggers[0]?.focus();
+          break;
+
+        case 'End':
+          event.preventDefault();
+          this.triggers[this.triggers.length - 1]?.focus();
+          break;
+      }
+    }
+
+    focusNext(currentIndex: number) {
+      const nextIndex = (currentIndex + 1) % this.triggers.length;
+      this.triggers[nextIndex]?.focus();
+    }
+
+    focusPrevious(currentIndex: number) {
+      const prevIndex = currentIndex === 0 ? this.triggers.length - 1 : currentIndex - 1;
+      this.triggers[prevIndex]?.focus();
+    }
+  }
+
+  // Initialize all accordions on page
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.accordion').forEach((el) => {
+      new Accordion(el as HTMLElement);
+    });
+  });
+</script>
+
+<style>
+  .accordion {
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+
+  .accordion-header {
+    margin: 0;
+  }
+
+  .accordion-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-element);
+    background: var(--color-surface-base);
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    min-height: var(--button-min-height);
+  }
+
+  .accordion-trigger:hover {
+    background-color: var(--color-neutral-50);
+  }
+
+  .accordion-trigger:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: -2px;
+  }
+
+  .accordion-title {
+    flex: 1;
+  }
+
+  .accordion-icon {
+    flex-shrink: 0;
+    margin-left: var(--space-element-sm);
+    transition: transform var(--transition-fast);
+  }
+
+  .accordion-trigger[aria-expanded='true'] .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion-panel {
+    overflow: hidden;
+  }
+
+  .accordion-panel[hidden] {
+    display: none;
+  }
+
+  .accordion-content {
+    padding: var(--space-element);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-body);
+  }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .accordion {
+      border-color: var(--color-border-dark, var(--color-neutral-800));
+    }
+
+    .accordion-item {
+      border-color: var(--color-border-dark, var(--color-neutral-800));
+    }
+
+    .accordion-trigger {
+      background: var(--color-surface-dark, var(--color-neutral-900));
+      color: var(--color-text-inverse, var(--color-neutral-100));
+    }
+
+    .accordion-trigger:hover {
+      background-color: var(--color-neutral-800);
+    }
+
+    .accordion-content {
+      color: var(--color-text-secondary-dark, var(--color-neutral-300));
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .accordion-trigger,
+    .accordion-icon {
+      transition: none;
+    }
+  }
+</style>
