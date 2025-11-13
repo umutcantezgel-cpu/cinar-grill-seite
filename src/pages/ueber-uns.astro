@@ -1,0 +1,144 @@
+---
+/**
+ * Über uns - Cinar Grill
+ * About page with story, team, and values
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import Footer from '../components/Footer.astro';
+
+// SEO Data
+const seoRouteData = await import('../../contracts/seo.routes.json');
+const aboutRoute = seoRouteData.routes.find((r) => r.path === '/ueber-uns');
+
+const values = [
+  {
+    title: 'Tradition',
+    description: 'Rezepte, die von Generation zu Generation weitergegeben wurden.',
+    icon: '📜',
+  },
+  {
+    title: 'Qualität',
+    description: 'Nur die besten Zutaten für unsere Gäste.',
+    icon: '⭐',
+  },
+  {
+    title: 'Leidenschaft',
+    description: 'Jedes Gericht wird mit Liebe und Hingabe zubereitet.',
+    icon: '❤️',
+  },
+  {
+    title: 'Gastfreundschaft',
+    description: 'Sie sind bei uns Familie, nicht nur Gast.',
+    icon: '🤝',
+  },
+];
+---
+
+<BaseLayout
+  title={aboutRoute?.meta.title || 'Über uns - Cinar Grill'}
+  description={aboutRoute?.meta.description || ''}
+  canonical="/ueber-uns"
+  ogImage="/assets/img/og-about.jpg"
+>
+  <Navigation slot="header" />
+
+  <!-- Hero Section -->
+  <section class="section bg-warm-beige-50 pt-32 pb-16">
+    <div class="container-custom max-w-4xl text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-charcoal-950 mb-4">
+        Über Cinar Grill
+      </h1>
+      <p class="text-lg md:text-xl text-charcoal-700">
+        Tradition trifft Moderne – Authentische türkische Küche seit [TODO: Jahr]
+      </p>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="section">
+    <div class="container-custom max-w-4xl">
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-3xl font-display font-bold text-charcoal-950 mb-6">Unsere Geschichte</h2>
+
+        <p class="text-charcoal-700 leading-relaxed mb-4">
+          Willkommen bei Cinar Grill – Ihrem Restaurant für authentische türkische Grillspezialitäten.
+          Was als kleine Familienidee begann, ist heute ein Ort geworden, an dem Tradition und
+          Gastfreundschaft im Mittelpunkt stehen.
+        </p>
+
+        <p class="text-charcoal-700 leading-relaxed mb-4">
+          Unsere Leidenschaft für die türkische Küche und insbesondere die Kunst des Grillens wurde
+          uns von Generation zu Generation weitergegeben. Jedes Rezept, jede Gewürzmischung und jede
+          Zubereitungsmethode basiert auf jahrzehntelanger Erfahrung und Liebe zum Detail.
+        </p>
+
+        <p class="text-charcoal-700 leading-relaxed mb-4">
+          Bei Cinar Grill verwenden wir nur die frischesten Zutaten, die wir täglich von ausgewählten
+          Lieferanten beziehen. Unser Fleisch kommt von regionalen Metzgern, unser Gemüse von lokalen
+          Märkten – Qualität, die Sie schmecken können.
+        </p>
+
+        <p class="text-charcoal-700 leading-relaxed">
+          Besuchen Sie uns und erleben Sie nicht nur ein Essen, sondern ein Stück türkischer Kultur
+          und Gastfreundschaft. Wir freuen uns darauf, Sie bei uns begrüßen zu dürfen!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="section bg-charcoal-50">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-charcoal-950 mb-12 text-center">
+        Unsere Werte
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map((value) => (
+          <Card variant="glass" class="text-center">
+            <div class="text-5xl mb-4" aria-hidden="true">{value.icon}</div>
+            <h3 class="text-xl font-semibold text-charcoal-950 mb-2">
+              {value.title}
+            </h3>
+            <p class="text-charcoal-700">
+              {value.description}
+            </p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section (Optional) -->
+  <section class="section">
+    <div class="container-custom max-w-4xl text-center">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-charcoal-950 mb-6">
+        Unser Team
+      </h2>
+      <p class="text-lg text-charcoal-700 mb-8">
+        Hinter jedem großartigen Essen steht ein großartiges Team. Lernen Sie die Menschen kennen,
+        die täglich mit Leidenschaft für Ihr kulinarisches Erlebnis sorgen.
+      </p>
+
+      <!-- TODO: Add team member photos and descriptions -->
+      <p class="text-charcoal-600 italic">
+        [Team-Fotos und -Beschreibungen folgen]
+      </p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .prose h2 {
+    @apply text-3xl font-display font-bold text-charcoal-950 mb-6;
+  }
+
+  .prose p {
+    @apply text-charcoal-700 leading-relaxed mb-4;
+  }
+</style>

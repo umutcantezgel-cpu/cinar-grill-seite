@@ -1,0 +1,156 @@
+---
+/**
+ * Speisekarte - Cinar Grill
+ * Menu page with dishes categorized
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import Footer from '../components/Footer.astro';
+
+// SEO Data
+const seoRouteData = await import('../../contracts/seo.routes.json');
+const menuRoute = seoRouteData.routes.find((r) => r.path === '/speisekarte');
+
+// Menu Data (Example - TODO: Move to JSON file)
+const menuCategories = [
+  {
+    name: 'Vorspeisen',
+    items: [
+      { name: 'Mercimek Çorbası', description: 'Türkische Linsensuppe', price: '4.90', vegetarian: true },
+      { name: 'Çoban Salatası', description: 'Hirten-Salat mit Schafskäse', price: '6.90', vegetarian: true },
+      { name: 'Humus', description: 'Kichererbsenpüree mit Olivenöl', price: '5.90', vegetarian: true, vegan: true },
+      { name: 'Sigara Böreği', description: 'Gebackene Teigrollen mit Schafskäse', price: '6.50', vegetarian: true },
+    ],
+  },
+  {
+    name: 'Grillspezialitäten',
+    items: [
+      { name: 'Adana Kebap', description: 'Würziges Hackfleisch vom Grill mit Reis und Salat', price: '14.90' },
+      { name: 'Urfa Kebap', description: 'Mild gewürztes Hackfleisch vom Grill', price: '14.90' },
+      { name: 'Kuzu Şiş', description: 'Lammspieß vom Grill', price: '16.90' },
+      { name: 'Tavuk Şiş', description: 'Hähnchenspieß vom Grill', price: '13.90' },
+      { name: 'Köfte', description: 'Hausgemachte Fleischbällchen', price: '12.90' },
+      { name: 'Karışık Grill', description: 'Gemischter Grillteller für 2 Personen', price: '29.90' },
+    ],
+  },
+  {
+    name: 'Vegetarisch',
+    items: [
+      { name: 'Falafel Teller', description: 'Kichererbsenbällchen mit Salat und Tahini', price: '11.90', vegetarian: true, vegan: true },
+      { name: 'Sebze Güveç', description: 'Gemüsetopf im Tonkrug', price: '12.90', vegetarian: true },
+      { name: 'Lahmacun Vegetarisch', description: 'Türkische Pizza mit Gemüse', price: '7.90', vegetarian: true },
+    ],
+  },
+  {
+    name: 'Beilagen',
+    items: [
+      { name: 'Reis', description: 'Traditionell gekochter Reis', price: '3.50', vegetarian: true },
+      { name: 'Pommes Frites', description: 'Knusprige Kartoffeln', price: '3.50', vegetarian: true },
+      { name: 'Bulgur', description: 'Gewürzter Bulgurweizen', price: '3.50', vegetarian: true, vegan: true },
+      { name: 'Gegrilltes Gemüse', description: 'Saisonales Gemüse vom Grill', price: '4.90', vegetarian: true, vegan: true },
+    ],
+  },
+  {
+    name: 'Desserts',
+    items: [
+      { name: 'Baklava', description: 'Blätterteig mit Pistazien und Honig', price: '5.50', vegetarian: true },
+      { name: 'Künefe', description: 'Warmer Käsekuchen mit Sirup', price: '6.50', vegetarian: true },
+      { name: 'Sütlaç', description: 'Türkischer Milchreis', price: '4.90', vegetarian: true },
+    ],
+  },
+  {
+    name: 'Getränke',
+    items: [
+      { name: 'Ayran', description: 'Türkisches Joghurtgetränk', price: '2.90', vegetarian: true },
+      { name: 'Çay (Tee)', description: 'Türkischer Schwarztee', price: '2.50', vegetarian: true, vegan: true },
+      { name: 'Türkischer Kaffee', description: 'Traditionell zubereitet', price: '3.50', vegetarian: true },
+      { name: 'Softdrinks', description: 'Cola, Fanta, Sprite (0,33l)', price: '2.90', vegetarian: true, vegan: true },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={menuRoute?.meta.title || 'Speisekarte - Cinar Grill'}
+  description={menuRoute?.meta.description || ''}
+  canonical="/speisekarte"
+  ogImage="/assets/img/og-menu.jpg"
+>
+  <Navigation slot="header" />
+
+  <!-- Page Header -->
+  <section class="section bg-warm-beige-50 pt-32 pb-16">
+    <div class="container-custom max-w-4xl text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-charcoal-950 mb-4">
+        Unsere Speisekarte
+      </h1>
+      <p class="text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto">
+        Entdecken Sie authentische türkische Grillspezialitäten, zubereitet mit frischen Zutaten
+        und nach traditionellen Rezepten.
+      </p>
+    </div>
+  </section>
+
+  <!-- Menu Categories -->
+  {menuCategories.map((category) => (
+    <section class="section">
+      <div class="container-custom max-w-5xl">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-charcoal-950 mb-8 text-center">
+          {category.name}
+        </h2>
+
+        <div class="grid gap-4">
+          {category.items.map((item) => (
+            <Card class="hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-start gap-4">
+                <div class="flex-1">
+                  <h3 class="text-xl font-semibold text-charcoal-950 mb-2 flex items-center gap-2">
+                    {item.name}
+                    {item.vegetarian && (
+                      <span
+                        class="text-xs bg-olive-100 text-olive-700 px-2 py-1 rounded-full"
+                        title="Vegetarisch"
+                      >
+                        🌱 Vegetarisch
+                      </span>
+                    )}
+                    {item.vegan && (
+                      <span
+                        class="text-xs bg-olive-200 text-olive-800 px-2 py-1 rounded-full"
+                        title="Vegan"
+                      >
+                        🌿 Vegan
+                      </span>
+                    )}
+                  </h3>
+                  <p class="text-charcoal-700">{item.description}</p>
+                </div>
+                <div class="flex-shrink-0">
+                  <span class="text-2xl font-bold text-glut-950">{item.price} €</span>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Allergen Info -->
+  <section class="section bg-charcoal-50">
+    <div class="container-custom max-w-4xl">
+      <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">Allergenkennzeichnung</h2>
+      <p class="text-charcoal-700 mb-4">
+        Bitte informieren Sie uns bei Bestellung über eventuelle Allergien oder Unverträglichkeiten.
+        Unsere Mitarbeiter beraten Sie gerne zu den Inhaltsstoffen unserer Gerichte.
+      </p>
+      <p class="text-sm text-charcoal-600">
+        Alle Preise verstehen sich in Euro inkl. MwSt. Preisänderungen vorbehalten.
+      </p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

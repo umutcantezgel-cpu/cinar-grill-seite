@@ -1,0 +1,233 @@
+---
+/**
+ * Kontakt - Cinar Grill
+ * Contact page with form, opening hours, and map
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import Footer from '../components/Footer.astro';
+
+// SEO Data
+const seoRouteData = await import('../../contracts/seo.routes.json');
+const contactRoute = seoRouteData.routes.find((r) => r.path === '/kontakt');
+
+const openingHours = [
+  { day: 'Montag – Freitag', hours: '11:00 – 22:00 Uhr' },
+  { day: 'Samstag – Sonntag', hours: '12:00 – 23:00 Uhr' },
+];
+---
+
+<BaseLayout
+  title={contactRoute?.meta.title || 'Kontakt - Cinar Grill'}
+  description={contactRoute?.meta.description || ''}
+  canonical="/kontakt"
+  ogImage="/assets/img/og-contact.jpg"
+>
+  <Navigation slot="header" />
+
+  <!-- Page Header -->
+  <section class="section bg-warm-beige-50 pt-32 pb-16">
+    <div class="container-custom max-w-4xl text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-charcoal-950 mb-4">
+        Kontakt
+      </h1>
+      <p class="text-lg md:text-xl text-charcoal-700">
+        Haben Sie Fragen oder möchten Sie uns besuchen? Wir freuen uns auf Ihre Nachricht!
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Info & Form -->
+  <section class="section">
+    <div class="container-custom max-w-6xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Contact Information -->
+        <div>
+          <h2 class="text-3xl font-display font-bold text-charcoal-950 mb-6">
+            Kontaktinformationen
+          </h2>
+
+          <!-- Address -->
+          <Card class="mb-6">
+            <h3 class="text-xl font-semibold text-charcoal-950 mb-3 flex items-center gap-2">
+              <span aria-hidden="true">📍</span> Adresse
+            </h3>
+            <address class="not-italic text-charcoal-700">
+              <p><strong>Cinar Grill</strong></p>
+              <p>TODO: Straße Hausnummer</p>
+              <p>TODO: PLZ Stadt</p>
+            </address>
+          </Card>
+
+          <!-- Phone & Email -->
+          <Card class="mb-6">
+            <h3 class="text-xl font-semibold text-charcoal-950 mb-3 flex items-center gap-2">
+              <span aria-hidden="true">📞</span> Telefon & E-Mail
+            </h3>
+            <div class="space-y-2 text-charcoal-700">
+              <p>
+                <strong>Telefon:</strong>{' '}
+                <a href="tel:+49TODO" class="text-glut-950 hover:underline">
+                  +49 TODO
+                </a>
+              </p>
+              <p>
+                <strong>E-Mail:</strong>{' '}
+                <a href="mailto:info@cinargrill.de" class="text-glut-950 hover:underline">
+                  info@cinargrill.de
+                </a>
+              </p>
+            </div>
+          </Card>
+
+          <!-- Opening Hours -->
+          <Card>
+            <h3 class="text-xl font-semibold text-charcoal-950 mb-3 flex items-center gap-2">
+              <span aria-hidden="true">🕐</span> Öffnungszeiten
+            </h3>
+            <div class="space-y-2 text-charcoal-700">
+              {openingHours.map((schedule) => (
+                <div class="flex justify-between">
+                  <span class="font-medium">{schedule.day}:</span>
+                  <span>{schedule.hours}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        <!-- Contact Form -->
+        <div>
+          <h2 class="text-3xl font-display font-bold text-charcoal-950 mb-6">
+            Nachricht senden
+          </h2>
+
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            class="space-y-4"
+          >
+            <!-- Honeypot field (hidden) -->
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="hidden">
+              <label>
+                Don't fill this out if you're human: <input name="bot-field" />
+              </label>
+            </div>
+
+            <!-- Name -->
+            <div>
+              <label for="name" class="form-label">
+                Name <span class="text-glut-950">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="form-input"
+                placeholder="Ihr Name"
+              />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label for="email" class="form-label">
+                E-Mail <span class="text-glut-950">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="form-input"
+                placeholder="ihre@email.de"
+              />
+            </div>
+
+            <!-- Phone (optional) -->
+            <div>
+              <label for="phone" class="form-label">Telefon (optional)</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="form-input"
+                placeholder="+49 ..."
+              />
+            </div>
+
+            <!-- Message -->
+            <div>
+              <label for="message" class="form-label">
+                Nachricht <span class="text-glut-950">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="6"
+                class="form-input"
+                placeholder="Ihre Nachricht an uns..."
+              ></textarea>
+            </div>
+
+            <!-- Privacy Checkbox -->
+            <div class="flex items-start gap-2">
+              <input
+                type="checkbox"
+                id="privacy"
+                name="privacy"
+                required
+                class="mt-1"
+              />
+              <label for="privacy" class="text-sm text-charcoal-700">
+                Ich habe die{' '}
+                <a href="/datenschutz" class="text-glut-950 hover:underline">
+                  Datenschutzerklärung
+                </a>{' '}
+                gelesen und stimme der Verarbeitung meiner Daten zu. <span class="text-glut-950">*</span>
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary w-full">
+              Nachricht senden
+            </button>
+
+            <p class="text-sm text-charcoal-600">
+              * Pflichtfelder
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section (Two-Click Embed Placeholder) -->
+  <section class="section bg-charcoal-50">
+    <div class="container-custom max-w-6xl">
+      <h2 class="text-3xl font-display font-bold text-charcoal-950 mb-6 text-center">
+        Anfahrt
+      </h2>
+
+      <!-- TODO: Implement Two-Click Google Maps Embed -->
+      <div class="bg-charcoal-200 rounded-xl p-12 text-center">
+        <p class="text-charcoal-700 mb-4">
+          <span class="text-4xl mb-4 block" aria-hidden="true">🗺️</span>
+          <strong>Karte wird hier angezeigt</strong>
+        </p>
+        <p class="text-charcoal-600">
+          TODO: Two-Click Google Maps Integration<br />
+          (Datenschutzkonform mit Consent)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
