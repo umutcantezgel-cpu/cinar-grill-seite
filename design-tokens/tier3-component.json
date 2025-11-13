@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://cinargrill.de/schemas/design-tokens/tier3-component.json",
+  "version": "1.0.0",
+  "description": "Tier 3: Component Tokens - Specific component implementations",
+  "imports": ["tier2-semantic.json"],
+  "button": {
+    "primary": {
+      "background": "{colors.brand.primary}",
+      "backgroundHover": "{colors.brand.primaryHover}",
+      "backgroundActive": "{colors.brand.primaryActive}",
+      "color": "{colors.text.inverse}",
+      "border": "none",
+      "borderRadius": "{radius.button}",
+      "paddingX": "{spacing.component.lg}",
+      "paddingY": "{spacing.component.md}",
+      "fontSize": "{typography.body.base.fontSize}",
+      "fontWeight": "{fontWeight.semibold}",
+      "boxShadow": "{effects.shadow.default}",
+      "transition": "all {animation.duration.normal} {animation.easing.default}"
+    },
+    "secondary": {
+      "background": "{colors.background.secondary}",
+      "backgroundHover": "{colors.gray.200}",
+      "color": "{colors.text.primary}",
+      "border": "1px solid {colors.border.default}",
+      "borderRadius": "{radius.button}",
+      "paddingX": "{spacing.component.lg}",
+      "paddingY": "{spacing.component.md}",
+      "fontSize": "{typography.body.base.fontSize}",
+      "fontWeight": "{fontWeight.medium}",
+      "boxShadow": "none",
+      "transition": "all {animation.duration.normal} {animation.easing.default}"
+    },
+    "ghost": {
+      "background": "transparent",
+      "backgroundHover": "rgba(193, 39, 45, 0.1)",
+      "color": "{colors.brand.primary}",
+      "border": "1px solid {colors.brand.primary}",
+      "borderRadius": "{radius.button}",
+      "paddingX": "{spacing.component.lg}",
+      "paddingY": "{spacing.component.md}",
+      "fontSize": "{typography.body.base.fontSize}",
+      "fontWeight": "{fontWeight.medium}",
+      "boxShadow": "none",
+      "transition": "all {animation.duration.normal} {animation.easing.default}"
+    },
+    "sizes": {
+      "sm": {
+        "paddingX": "{spacing.component.md}",
+        "paddingY": "{spacing.component.sm}",
+        "fontSize": "{fontSize.sm}",
+        "minHeight": "36px"
+      },
+      "md": {
+        "paddingX": "{spacing.component.lg}",
+        "paddingY": "{spacing.component.md}",
+        "fontSize": "{fontSize.base}",
+        "minHeight": "44px"
+      },
+      "lg": {
+        "paddingX": "{spacing.component.xl}",
+        "paddingY": "{spacing.component.lg}",
+        "fontSize": "{fontSize.lg}",
+        "minHeight": "52px"
+      }
+    }
+  },
+  "card": {
+    "default": {
+      "background": "{colors.surface.base}",
+      "border": "1px solid {colors.border.subtle}",
+      "borderRadius": "{radius.card}",
+      "padding": "{spacing.component.xl}",
+      "boxShadow": "{effects.shadow.default}",
+      "transition": "all {animation.duration.normal} {animation.easing.default}"
+    },
+    "hover": {
+      "boxShadow": "{effects.shadow.medium}",
+      "transform": "translateY(-4px)"
+    },
+    "glass": {
+      "background": "{effects.glassmorphism.light.background}",
+      "backdropFilter": "{effects.glassmorphism.light.backdropFilter}",
+      "border": "{effects.glassmorphism.light.border}",
+      "borderRadius": "{radius.card}",
+      "padding": "{spacing.component.xl}",
+      "boxShadow": "{effects.glassmorphism.light.boxShadow}"
+    }
+  },
+  "navigation": {
+    "default": {
+      "background": "transparent",
+      "backdropFilter": "none",
+      "borderBottom": "1px solid transparent",
+      "padding": "{spacing.component.md}",
+      "transition": "all {animation.duration.slow} {animation.easing.default}"
+    },
+    "scrolled": {
+      "background": "{effects.glassmorphism.light.background}",
+      "backdropFilter": "{effects.glassmorphism.light.backdropFilter}",
+      "borderBottom": "{effects.glassmorphism.light.border}",
+      "boxShadow": "{effects.glassmorphism.light.boxShadow}"
+    },
+    "link": {
+      "color": "{colors.text.primary}",
+      "colorHover": "{colors.brand.primary}",
+      "fontSize": "{fontSize.base}",
+      "fontWeight": "{fontWeight.medium}",
+      "paddingX": "{spacing.component.md}",
+      "paddingY": "{spacing.component.sm}",
+      "transition": "color {animation.duration.fast} {animation.easing.default}"
+    }
+  },
+  "hero": {
+    "default": {
+      "minHeight": "600px",
+      "background": "linear-gradient(135deg, {colors.beige.200} 0%, {colors.gray.100} 100%)",
+      "paddingY": "{spacing.section.xl}",
+      "paddingX": "{spacing.component.lg}"
+    },
+    "overlay": {
+      "background": "{effects.glassmorphism.light.background}",
+      "backdropFilter": "{effects.glassmorphism.light.backdropFilter}",
+      "border": "{effects.glassmorphism.light.border}",
+      "borderRadius": "{radius.card}",
+      "padding": "{spacing.section.md}",
+      "boxShadow": "{effects.shadow.large}"
+    },
+    "title": {
+      "fontSize": "{typography.heading.h1.fontSize}",
+      "fontWeight": "{typography.heading.h1.fontWeight}",
+      "fontFamily": "{typography.fontFamily.display}",
+      "lineHeight": "{typography.heading.h1.lineHeight}",
+      "color": "{colors.text.primary}",
+      "marginBottom": "{spacing.component.lg}"
+    },
+    "subtitle": {
+      "fontSize": "{typography.body.large.fontSize}",
+      "lineHeight": "{typography.body.large.lineHeight}",
+      "color": "{colors.text.secondary}",
+      "marginBottom": "{spacing.component.xl}"
+    }
+  },
+  "form": {
+    "input": {
+      "background": "{colors.surface.base}",
+      "border": "1px solid {colors.border.default}",
+      "borderRadius": "{radius.input}",
+      "paddingX": "{spacing.component.md}",
+      "paddingY": "{spacing.component.sm}",
+      "fontSize": "{fontSize.base}",
+      "color": "{colors.text.primary}",
+      "minHeight": "{accessibility.targetSize.minimum}",
+      "transition": "all {animation.duration.fast} {animation.easing.default}"
+    },
+    "inputFocus": {
+      "borderColor": "{colors.brand.primary}",
+      "outline": "{accessibility.focusRing.width} {accessibility.focusRing.style} {accessibility.focusRing.color}",
+      "outlineOffset": "{accessibility.focusRing.offset}"
+    },
+    "inputError": {
+      "borderColor": "{colors.feedback.error}",
+      "background": "{colors.feedback.errorLight}"
+    },
+    "label": {
+      "fontSize": "{fontSize.sm}",
+      "fontWeight": "{fontWeight.medium}",
+      "color": "{colors.text.primary}",
+      "marginBottom": "{spacing.inline.sm}"
+    },
+    "helperText": {
+      "fontSize": "{fontSize.sm}",
+      "color": "{colors.text.secondary}",
+      "marginTop": "{spacing.inline.xs}"
+    },
+    "errorText": {
+      "fontSize": "{fontSize.sm}",
+      "color": "{colors.feedback.error}",
+      "marginTop": "{spacing.inline.xs}"
+    }
+  },
+  "modal": {
+    "overlay": {
+      "background": "{colors.background.overlay}",
+      "backdropFilter": "blur(4px)",
+      "zIndex": "1000"
+    },
+    "content": {
+      "background": "{colors.surface.base}",
+      "borderRadius": "{radius.modal}",
+      "padding": "{spacing.section.md}",
+      "boxShadow": "{effects.shadow.extraLarge}",
+      "maxWidth": "600px",
+      "zIndex": "1001"
+    },
+    "glass": {
+      "background": "{effects.glassmorphism.medium.background}",
+      "backdropFilter": "{effects.glassmorphism.medium.backdropFilter}",
+      "border": "{effects.glassmorphism.medium.border}",
+      "boxShadow": "{effects.glassmorphism.medium.boxShadow}"
+    }
+  },
+  "badge": {
+    "default": {
+      "background": "{colors.background.secondary}",
+      "color": "{colors.text.primary}",
+      "fontSize": "{fontSize.xs}",
+      "fontWeight": "{fontWeight.medium}",
+      "paddingX": "{spacing.inline.md}",
+      "paddingY": "{spacing.inline.xs}",
+      "borderRadius": "{borderRadius.full}"
+    },
+    "success": {
+      "background": "{colors.feedback.successLight}",
+      "color": "{colors.feedback.success}"
+    },
+    "warning": {
+      "background": "{colors.feedback.warningLight}",
+      "color": "{colors.feedback.warning}"
+    },
+    "error": {
+      "background": "{colors.feedback.errorLight}",
+      "color": "{colors.feedback.error}"
+    }
+  },
+  "footer": {
+    "background": "{colors.gray.900}",
+    "color": "{colors.text.inverse}",
+    "paddingY": "{spacing.section.lg}",
+    "paddingX": "{spacing.component.lg}",
+    "link": {
+      "color": "{colors.gray.400}",
+      "colorHover": "{colors.white}",
+      "transition": "color {animation.duration.fast} {animation.easing.default}"
+    }
+  }
+}

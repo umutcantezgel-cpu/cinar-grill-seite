@@ -1,0 +1,244 @@
+---
+/**
+ * Navigation Component
+ * Responsive navigation with glassmorphism effect on scroll
+ * Fully accessible with keyboard navigation and ARIA labels
+ */
+
+export interface NavItem {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const navItems: NavItem[] = [
+  { label: 'Startseite', href: '/' },
+  { label: 'Speisekarte', href: '/speisekarte' },
+  { label: 'Über uns', href: '/ueber-uns' },
+  { label: 'Reservierung', href: '/reservierung' },
+  { label: 'Kontakt', href: '/kontakt' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
+  <nav class="container-custom" aria-label="Hauptnavigation">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" class="flex items-center space-x-2 focus:outline-none focus-ring" aria-label="Zur Startseite">
+          <!-- TODO: Replace with actual SVG logo -->
+          <span class="text-2xl font-display font-bold text-glut-950">
+            CINAR GRILL
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:space-x-1">
+        {navItems.map((item) => {
+          const isActive = currentPath === item.href ||
+                          (item.href !== '/' && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              class={`nav-link px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150
+                ${isActive
+                  ? 'text-glut-950 bg-glut-50'
+                  : 'text-charcoal-700 hover:text-glut-950 hover:bg-charcoal-50'
+                }`}
+              aria-current={isActive ? 'page' : undefined}
+              {...(item.external && { target: '_blank', rel: 'noopener noreferrer' })}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </div>
+
+      <!-- CTA Button (Desktop) -->
+      <div class="hidden md:block">
+        <a href="/reservierung" class="btn-primary">
+          Tisch reservieren
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        class="md:hidden p-2 rounded-lg text-charcoal-700 hover:bg-charcoal-100 focus:outline-none focus-ring"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Menü öffnen"
+      >
+        <svg
+          id="menu-icon-open"
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg
+          id="menu-icon-close"
+          class="h-6 w-6 hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="md:hidden hidden"
+      aria-label="Mobile Navigation"
+    >
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        {navItems.map((item) => {
+          const isActive = currentPath === item.href;
+          return (
+            <a
+              href={item.href}
+              class={`block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-150
+                ${isActive
+                  ? 'text-glut-950 bg-glut-50'
+                  : 'text-charcoal-700 hover:text-glut-950 hover:bg-charcoal-50'
+                }`}
+              aria-current={isActive ? 'page' : undefined}
+              {...(item.external && { target: '_blank', rel: 'noopener noreferrer' })}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+        <a href="/reservierung" class="block btn-primary mt-4">
+          Tisch reservieren
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  /**
+   * Navigation Behavior
+   * - Glassmorphism effect on scroll
+   * - Mobile menu toggle
+   * - Keyboard accessibility
+   */
+
+  // Glassmorphism effect on scroll
+  let lastScrollTop = 0;
+  const header = document.getElementById('site-header');
+
+  function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > 50) {
+      header?.classList.add('glass-nav', 'shadow-md');
+    } else {
+      header?.classList.remove('glass-nav', 'shadow-md');
+    }
+
+    lastScrollTop = scrollTop;
+  }
+
+  // Throttle scroll handler for performance
+  let scrollTimeout: ReturnType<typeof setTimeout>;
+  window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout);
+    }
+    scrollTimeout = window.requestAnimationFrame(handleScroll);
+  }, { passive: true });
+
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+
+    mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+    mobileMenuButton.setAttribute('aria-label', isExpanded ? 'Menü öffnen' : 'Menü schließen');
+
+    mobileMenu?.classList.toggle('hidden');
+    menuIconOpen?.classList.toggle('hidden');
+    menuIconClose?.classList.toggle('hidden');
+
+    // Prevent body scroll when menu is open
+    if (!isExpanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenuButton?.getAttribute('aria-expanded') === 'true') {
+      mobileMenuButton.click();
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (
+      mobileMenuButton?.getAttribute('aria-expanded') === 'true' &&
+      !header?.contains(target)
+    ) {
+      mobileMenuButton.click();
+    }
+  });
+</script>
+
+<style>
+  /* Smooth transition for glassmorphism */
+  #site-header {
+    background-color: transparent;
+  }
+
+  #site-header.glass-nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Mobile menu animation */
+  #mobile-menu {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    #mobile-menu {
+      animation: none;
+    }
+  }
+</style>

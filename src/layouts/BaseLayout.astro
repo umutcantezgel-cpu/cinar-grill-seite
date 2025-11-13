@@ -1,0 +1,142 @@
+---
+/**
+ * Base Layout
+ * Main layout wrapper with SEO, accessibility, and security features
+ */
+
+import '../styles/base.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  noindex?: boolean;
+  structuredData?: object;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/assets/img/og-default.jpg',
+  ogType = 'website',
+  noindex = false,
+  structuredData,
+} = Astro.props;
+
+const siteUrl = 'https://cinargrill.de';
+const fullCanonical = canonical ? `${siteUrl}${canonical}` : `${siteUrl}${Astro.url.pathname}`;
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+
+// Construct full title
+const fullTitle = title.includes('Cinar Grill') ? title : `${title} - Cinar Grill`;
+---
+
+<!DOCTYPE html>
+<html lang="de-DE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <meta name="robots" content="index, follow" />}
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={fullCanonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={fullCanonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Cinar Grill" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={fullCanonical} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={fullOgImage} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preconnect to critical origins (if needed) -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+
+    <!-- Preload Critical Assets -->
+    <!-- TODO: Add font preloads when fonts are self-hosted -->
+    <!-- <link rel="preload" href="/assets/font/inter.woff2" as="font" type="font/woff2" crossorigin> -->
+
+    <!-- Structured Data (JSON-LD) -->
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#C1272D" />
+
+    <!-- Security Headers (CSP will be set via Netlify _headers) -->
+    <!-- Meta CSP as fallback -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  </head>
+
+  <body>
+    <!-- Skip to main content link (A11y) -->
+    <a href="#main-content" class="skip-link">
+      Zum Hauptinhalt springen
+    </a>
+
+    <!-- Main Layout Structure -->
+    <div id="app" class="flex flex-col min-h-screen">
+      <!-- Slot for header/navigation -->
+      <slot name="header" />
+
+      <!-- Main Content -->
+      <main id="main-content" tabindex="-1">
+        <slot />
+      </main>
+
+      <!-- Slot for footer -->
+      <slot name="footer" />
+    </div>
+
+    <!-- Consent Banner (will be added as component) -->
+    <div id="consent-banner-root"></div>
+
+    <!-- Scripts -->
+    <!-- Core utilities will be added here -->
+  </body>
+</html>
+
+<style>
+  /* Ensure main grows to fill space */
+  #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  /* Ensure focus on main is not visible (for skip link) */
+  main:focus {
+    outline: none;
+  }
+</style>

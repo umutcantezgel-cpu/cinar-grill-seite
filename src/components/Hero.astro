@@ -1,0 +1,92 @@
+---
+/**
+ * Hero Component
+ * Full-width hero section with glassmorphism overlay
+ * Responsive images with lazy loading
+ */
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  backgroundImage?: string;
+  backgroundGradient?: string;
+  centered?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  ctaText = 'Mehr erfahren',
+  ctaHref = '#',
+  backgroundImage,
+  backgroundGradient = 'linear-gradient(135deg, #F5E6D3 0%, #F1F3F5 100%)',
+  centered = true,
+} = Astro.props;
+---
+
+<section
+  class="hero-section relative min-h-[600px] md:min-h-[700px] flex items-center overflow-hidden"
+  style={backgroundImage
+    ? `background-image: url('${backgroundImage}'); background-size: cover; background-position: center;`
+    : `background: ${backgroundGradient};`}
+>
+  <!-- Background Overlay (optional dark overlay for image backgrounds) -->
+  {backgroundImage && (
+    <div class="absolute inset-0 bg-charcoal-950/20" aria-hidden="true"></div>
+  )}
+
+  <!-- Content Container -->
+  <div class="container-custom relative z-10 py-16 md:py-24">
+    <div class={`max-w-4xl ${centered ? 'mx-auto text-center' : ''}`}>
+      <!-- Glass Morphism Content Box -->
+      <div class="glass-card rounded-2xl p-8 md:p-12 animate-fade-in">
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-charcoal-950 mb-6 text-balance">
+          {title}
+        </h1>
+
+        {subtitle && (
+          <p class="text-lg md:text-xl text-charcoal-700 mb-8 max-w-2xl mx-auto leading-relaxed">
+            {subtitle}
+          </p>
+        )}
+
+        <div class={`flex flex-wrap gap-4 ${centered ? 'justify-center' : ''}`}>
+          <slot name="cta">
+            <a href={ctaHref} class="btn-primary text-lg">
+              {ctaText}
+            </a>
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative Elements (optional) -->
+  <slot name="decorative" />
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+  }
+
+  /* Animation */
+  @media (prefers-reduced-motion: no-preference) {
+    .glass-card {
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+</style>

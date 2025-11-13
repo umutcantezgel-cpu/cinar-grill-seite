@@ -1,0 +1,296 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://cinargrill.de/schemas/seo.routes.json",
+  "version": "1.0.0",
+  "baseUrl": "https://cinargrill.de",
+  "defaultLocale": "de-DE",
+  "routes": [
+    {
+      "path": "/",
+      "priority": 1.0,
+      "changefreq": "weekly",
+      "meta": {
+        "title": "Cinar Grill - Authentisches Türkisches Restaurant | Frisch Gegrillte Spezialitäten",
+        "description": "Erleben Sie authentische türkische Grillkunst im Cinar Grill. Frische Zutaten, traditionelle Rezepte und herzliche Gastfreundschaft. Jetzt Tisch reservieren!",
+        "keywords": [
+          "türkisches Restaurant",
+          "Grill Restaurant",
+          "Döner",
+          "Köfte",
+          "Adana Kebap",
+          "türkische Küche",
+          "authentisch",
+          "frisch gegrillt"
+        ],
+        "robots": "index, follow",
+        "canonical": "/"
+      },
+      "openGraph": {
+        "type": "website",
+        "title": "Cinar Grill - Authentisches Türkisches Restaurant",
+        "description": "Erleben Sie authentische türkische Grillkunst im Cinar Grill. Frische Zutaten, traditionelle Rezepte und herzliche Gastfreundschaft.",
+        "image": "/assets/img/og-home.jpg",
+        "imageAlt": "Cinar Grill Restaurant - Frisch gegrillte Spezialitäten",
+        "locale": "de_DE"
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "title": "Cinar Grill - Authentisches Türkisches Restaurant",
+        "description": "Erleben Sie authentische türkische Grillkunst. Frische Zutaten, traditionelle Rezepte.",
+        "image": "/assets/img/twitter-home.jpg"
+      },
+      "structuredData": {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "@id": "https://cinargrill.de/#restaurant",
+        "name": "Cinar Grill",
+        "description": "Authentisches türkisches Grill-Restaurant mit traditionellen Spezialitäten",
+        "url": "https://cinargrill.de",
+        "telephone": "+49-TODO-PHONE",
+        "email": "info@cinargrill.de",
+        "servesCuisine": ["Turkish", "Mediterranean", "Grilled"],
+        "priceRange": "€€",
+        "acceptsReservations": true,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "TODO Straße Hausnummer",
+          "addressLocality": "TODO Stadt",
+          "postalCode": "TODO PLZ",
+          "addressCountry": "DE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": null,
+          "longitude": null
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "11:00",
+            "closes": "22:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "12:00",
+            "closes": "23:00"
+          }
+        ],
+        "menu": "https://cinargrill.de/speisekarte",
+        "image": "https://cinargrill.de/assets/img/restaurant-exterior.jpg",
+        "hasMenu": {
+          "@type": "Menu",
+          "url": "https://cinargrill.de/speisekarte"
+        }
+      }
+    },
+    {
+      "path": "/speisekarte",
+      "priority": 0.9,
+      "changefreq": "monthly",
+      "meta": {
+        "title": "Speisekarte - Cinar Grill | Türkische Grill-Spezialitäten",
+        "description": "Entdecken Sie unsere vielfältige Speisekarte mit traditionellen türkischen Grillgerichten, vegetarischen Optionen, Vorspeisen und Desserts. Alle Gerichte mit Allergenkennzeichnung.",
+        "keywords": [
+          "Speisekarte",
+          "Menü",
+          "Döner",
+          "Köfte",
+          "Lahmacun",
+          "Adana Kebap",
+          "vegetarisch",
+          "Preise"
+        ],
+        "robots": "index, follow",
+        "canonical": "/speisekarte"
+      },
+      "openGraph": {
+        "type": "website",
+        "title": "Speisekarte - Cinar Grill",
+        "description": "Entdecken Sie unsere vielfältige Speisekarte mit traditionellen türkischen Grillgerichten.",
+        "image": "/assets/img/og-menu.jpg",
+        "locale": "de_DE"
+      },
+      "structuredData": {
+        "@context": "https://schema.org",
+        "@type": "Menu",
+        "name": "Cinar Grill Speisekarte",
+        "description": "Vollständige Speisekarte mit türkischen Grillspezialitäten",
+        "inLanguage": "de-DE",
+        "hasMenuSection": []
+      }
+    },
+    {
+      "path": "/ueber-uns",
+      "priority": 0.7,
+      "changefreq": "yearly",
+      "meta": {
+        "title": "Über uns - Cinar Grill | Unsere Geschichte & Philosophie",
+        "description": "Lernen Sie die Geschichte hinter Cinar Grill kennen. Seit Jahren verbinden wir traditionelle türkische Grillkunst mit moderner Gastfreundschaft. Erfahren Sie mehr über unser Team.",
+        "keywords": [
+          "über uns",
+          "Geschichte",
+          "Team",
+          "Philosophie",
+          "Qualität",
+          "Tradition"
+        ],
+        "robots": "index, follow",
+        "canonical": "/ueber-uns"
+      },
+      "openGraph": {
+        "type": "website",
+        "title": "Über uns - Cinar Grill",
+        "description": "Lernen Sie die Geschichte hinter Cinar Grill kennen. Tradition trifft Moderne.",
+        "image": "/assets/img/og-about.jpg",
+        "locale": "de_DE"
+      },
+      "structuredData": {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "mainEntity": {
+          "@type": "Restaurant",
+          "@id": "https://cinargrill.de/#restaurant"
+        }
+      }
+    },
+    {
+      "path": "/reservierung",
+      "priority": 0.8,
+      "changefreq": "monthly",
+      "meta": {
+        "title": "Tisch reservieren - Cinar Grill | Online Reservierung",
+        "description": "Reservieren Sie jetzt Ihren Tisch im Cinar Grill. Schnell, unkompliziert und sicher online. Wir freuen uns auf Ihren Besuch!",
+        "keywords": [
+          "Reservierung",
+          "Tisch reservieren",
+          "online buchen",
+          "Tischreservierung"
+        ],
+        "robots": "index, follow",
+        "canonical": "/reservierung"
+      },
+      "openGraph": {
+        "type": "website",
+        "title": "Tisch reservieren - Cinar Grill",
+        "description": "Reservieren Sie jetzt Ihren Tisch im Cinar Grill.",
+        "image": "/assets/img/og-reservation.jpg",
+        "locale": "de_DE"
+      },
+      "structuredData": {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Tischreservierung",
+        "description": "Online-Reservierungsformular für Cinar Grill"
+      }
+    },
+    {
+      "path": "/kontakt",
+      "priority": 0.6,
+      "changefreq": "yearly",
+      "meta": {
+        "title": "Kontakt - Cinar Grill | Öffnungszeiten & Anfahrt",
+        "description": "Kontaktieren Sie Cinar Grill. Finden Sie unsere Öffnungszeiten, Adresse, Telefonnummer und Anfahrt. Wir freuen uns auf Ihre Nachricht!",
+        "keywords": [
+          "Kontakt",
+          "Öffnungszeiten",
+          "Anfahrt",
+          "Telefon",
+          "E-Mail",
+          "Adresse"
+        ],
+        "robots": "index, follow",
+        "canonical": "/kontakt"
+      },
+      "openGraph": {
+        "type": "website",
+        "title": "Kontakt - Cinar Grill",
+        "description": "Kontaktieren Sie uns. Öffnungszeiten, Adresse und Anfahrt.",
+        "image": "/assets/img/og-contact.jpg",
+        "locale": "de_DE"
+      },
+      "structuredData": {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "mainEntity": {
+          "@type": "Restaurant",
+          "@id": "https://cinargrill.de/#restaurant"
+        }
+      }
+    },
+    {
+      "path": "/impressum",
+      "priority": 0.3,
+      "changefreq": "yearly",
+      "meta": {
+        "title": "Impressum - Cinar Grill",
+        "description": "Impressum und rechtliche Informationen zu Cinar Grill gemäß § 5 TMG.",
+        "keywords": ["Impressum", "rechtliche Informationen"],
+        "robots": "index, nofollow",
+        "canonical": "/impressum"
+      },
+      "openGraph": null,
+      "structuredData": null
+    },
+    {
+      "path": "/datenschutz",
+      "priority": 0.3,
+      "changefreq": "yearly",
+      "meta": {
+        "title": "Datenschutzerklärung - Cinar Grill",
+        "description": "Datenschutzerklärung von Cinar Grill gemäß DSGVO. Informationen zur Datenverarbeitung und Ihren Rechten.",
+        "keywords": ["Datenschutz", "DSGVO", "Datenschutzerklärung"],
+        "robots": "index, nofollow",
+        "canonical": "/datenschutz"
+      },
+      "openGraph": null,
+      "structuredData": null
+    },
+    {
+      "path": "/404",
+      "priority": 0.0,
+      "changefreq": "never",
+      "meta": {
+        "title": "Seite nicht gefunden - Cinar Grill",
+        "description": "Die angeforderte Seite wurde nicht gefunden.",
+        "robots": "noindex, nofollow",
+        "canonical": null
+      },
+      "openGraph": null,
+      "structuredData": null,
+      "excludeFromSitemap": true
+    },
+    {
+      "path": "/503",
+      "priority": 0.0,
+      "changefreq": "never",
+      "meta": {
+        "title": "Wartungsarbeiten - Cinar Grill",
+        "description": "Wir führen gerade Wartungsarbeiten durch. Bitte versuchen Sie es in Kürze erneut.",
+        "robots": "noindex, nofollow",
+        "canonical": null
+      },
+      "openGraph": null,
+      "structuredData": null,
+      "excludeFromSitemap": true,
+      "headers": {
+        "Retry-After": "3600"
+      }
+    },
+    {
+      "path": "/offline",
+      "priority": 0.0,
+      "changefreq": "never",
+      "meta": {
+        "title": "Offline - Cinar Grill",
+        "description": "Sie sind offline. Bitte überprüfen Sie Ihre Internetverbindung.",
+        "robots": "noindex, nofollow",
+        "canonical": null
+      },
+      "openGraph": null,
+      "structuredData": null,
+      "excludeFromSitemap": true
+    }
+  ]
+}

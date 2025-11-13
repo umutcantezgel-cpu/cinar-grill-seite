@@ -1,0 +1,377 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://cinargrill.de/schemas/manifest.webspec.json",
+  "version": "1.0.0",
+  "project": {
+    "name": "Cinar Grill Website",
+    "vendor": "Cinar Grill",
+    "description": "Premium restaurant website with enterprise-grade quality",
+    "repository": "https://github.com/umutcantezgel-cpu/cinar-grill-seite",
+    "license": "UNLICENSED",
+    "maintainers": [
+      {
+        "name": "TODO",
+        "email": "TODO@cinargrill.de",
+        "role": "Lead Developer"
+      }
+    ]
+  },
+  "runtime": {
+    "framework": "astro",
+    "version": "^4.0.0",
+    "nodeVersion": ">=20.0.0",
+    "buildCommand": "npm run build",
+    "outputDir": "dist",
+    "staticAssets": "public"
+  },
+  "branding": {
+    "colors": {
+      "primary": {
+        "glut": "#C1272D",
+        "charcoal": "#2D2D2D",
+        "warmBeige": "#F5E6D3"
+      },
+      "secondary": {
+        "gold": "#D4AF37",
+        "olive": "#4A5D23",
+        "terracotta": "#E07A5F"
+      },
+      "neutral": {
+        "white": "#FFFFFF",
+        "smoke": "#F8F9FA",
+        "slate": "#6C757D",
+        "black": "#0D0D0D"
+      }
+    },
+    "typography": {
+      "display": {
+        "family": "Playfair Display",
+        "weights": [400, 700],
+        "format": "woff2",
+        "fallback": "serif"
+      },
+      "body": {
+        "family": "Inter",
+        "weights": [400, 500, 600, 700],
+        "format": "woff2",
+        "fallback": "sans-serif"
+      },
+      "accent": {
+        "family": "Merriweather",
+        "weights": [400, 700],
+        "format": "woff2",
+        "fallback": "serif"
+      }
+    },
+    "logo": {
+      "formats": ["svg", "png"],
+      "path": "/assets/img/logo",
+      "alt": "Cinar Grill - Türkisches Restaurant"
+    }
+  },
+  "performance": {
+    "budgets": {
+      "javascript": {
+        "perPage": 51200,
+        "unit": "bytes",
+        "description": "Max 50 KB gzipped JS per page"
+      },
+      "css": {
+        "total": 30720,
+        "unit": "bytes",
+        "description": "Max 30 KB gzipped CSS total"
+      },
+      "fonts": {
+        "total": 102400,
+        "unit": "bytes",
+        "description": "Max 100 KB WOFF2 fonts total"
+      },
+      "images": {
+        "perPage": 512000,
+        "unit": "bytes",
+        "description": "Max 500 KB images per page"
+      },
+      "totalPageWeight": {
+        "initial": 1048576,
+        "unit": "bytes",
+        "description": "Max 1 MB initial page load"
+      }
+    },
+    "coreWebVitals": {
+      "LCP": {
+        "target": 2500,
+        "unit": "ms",
+        "threshold": "good"
+      },
+      "INP": {
+        "target": 200,
+        "unit": "ms",
+        "threshold": "good"
+      },
+      "CLS": {
+        "target": 0.1,
+        "unit": "score",
+        "threshold": "good"
+      }
+    },
+    "optimizations": {
+      "criticalCSS": true,
+      "preloadFonts": true,
+      "preloadLCPImage": true,
+      "lazyLoadImages": true,
+      "prefetchLinks": false,
+      "inlineSmallAssets": false,
+      "compression": "brotli"
+    }
+  },
+  "security": {
+    "contentSecurityPolicy": {
+      "mode": "strict",
+      "directives": {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "'strict-dynamic'"],
+        "style-src": ["'self'"],
+        "img-src": ["'self'", "data:", "https:"],
+        "font-src": ["'self'"],
+        "connect-src": ["'self'"],
+        "frame-src": ["'none'"],
+        "object-src": ["'none'"],
+        "base-uri": ["'self'"],
+        "form-action": ["'self'"],
+        "frame-ancestors": ["'none'"],
+        "upgrade-insecure-requests": []
+      },
+      "reportOnly": false,
+      "reportUri": null
+    },
+    "headers": {
+      "strictTransportSecurity": {
+        "maxAge": 31536000,
+        "includeSubDomains": true,
+        "preload": true
+      },
+      "xContentTypeOptions": "nosniff",
+      "xFrameOptions": "DENY",
+      "xXSSProtection": "0",
+      "referrerPolicy": "strict-origin-when-cross-origin",
+      "permissionsPolicy": {
+        "geolocation": [],
+        "microphone": [],
+        "camera": [],
+        "payment": [],
+        "usb": [],
+        "magnetometer": [],
+        "gyroscope": [],
+        "accelerometer": []
+      },
+      "crossOriginEmbedderPolicy": "require-corp",
+      "crossOriginOpenerPolicy": "same-origin",
+      "crossOriginResourcePolicy": "same-origin"
+    },
+    "subresourceIntegrity": {
+      "enabled": true,
+      "coverage": 100,
+      "manifestPath": "/integrity.manifest.json",
+      "algorithms": ["sha384"]
+    },
+    "trustedTypes": {
+      "enabled": true,
+      "policyName": "default",
+      "require": true
+    }
+  },
+  "consent": {
+    "mode": "opt-in",
+    "categories": {
+      "necessary": {
+        "enabled": true,
+        "required": true,
+        "description": "Essential for website functionality"
+      },
+      "analytics": {
+        "enabled": false,
+        "required": false,
+        "description": "Helps us understand user behavior",
+        "services": []
+      },
+      "marketing": {
+        "enabled": false,
+        "required": false,
+        "description": "Used for targeted advertising",
+        "services": []
+      },
+      "maps": {
+        "enabled": false,
+        "required": false,
+        "description": "Embedded maps for location display",
+        "services": ["google-maps"]
+      },
+      "social": {
+        "enabled": false,
+        "required": false,
+        "description": "Social media embeds",
+        "services": ["instagram"]
+      }
+    },
+    "storage": {
+      "method": "localStorage",
+      "key": "cinar-grill-consent",
+      "expiry": 365
+    },
+    "ui": {
+      "position": "bottom",
+      "layout": "banner",
+      "rejectButton": true,
+      "detailsLink": "/datenschutz"
+    }
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2",
+    "level": "AA",
+    "requirements": {
+      "keyboardNavigation": true,
+      "focusVisible": true,
+      "skipLinks": true,
+      "landmarkRegions": true,
+      "ariaLabels": true,
+      "colorContrast": {
+        "text": 4.5,
+        "largeText": 3.0,
+        "ui": 3.0
+      },
+      "reducedMotion": true,
+      "minimumTargetSize": 24
+    },
+    "testing": {
+      "tools": ["axe", "pa11y"],
+      "criticalIssues": 0,
+      "seriousIssues": 0
+    }
+  },
+  "seo": {
+    "defaultLocale": "de-DE",
+    "alternateLocales": [],
+    "siteName": "Cinar Grill",
+    "siteUrl": "https://cinargrill.de",
+    "defaultImage": "/assets/img/og-default.jpg",
+    "twitterHandle": null,
+    "schemas": ["Restaurant", "LocalBusiness"],
+    "features": {
+      "sitemap": true,
+      "robotsTxt": true,
+      "canonical": true,
+      "openGraph": true,
+      "twitterCards": true,
+      "structuredData": true,
+      "hreflang": false
+    }
+  },
+  "features": {
+    "reservationForm": {
+      "enabled": true,
+      "backend": "netlify-forms",
+      "validation": "client-server",
+      "notification": "email"
+    },
+    "contactForm": {
+      "enabled": true,
+      "backend": "netlify-forms",
+      "honeypot": true
+    },
+    "newsletter": {
+      "enabled": false,
+      "provider": null,
+      "doubleOptIn": true
+    },
+    "googleMaps": {
+      "enabled": true,
+      "twoClick": true,
+      "apiKey": null,
+      "coordinates": {
+        "lat": null,
+        "lng": null
+      }
+    },
+    "gallery": {
+      "enabled": true,
+      "lightbox": true,
+      "lazyLoad": true
+    },
+    "testimonials": {
+      "enabled": true,
+      "source": "manual",
+      "schemaMarkup": true
+    },
+    "menu": {
+      "enabled": true,
+      "source": "json",
+      "allergenLabels": true,
+      "dietaryFilters": true
+    }
+  },
+  "deployment": {
+    "platform": "netlify",
+    "branch": "main",
+    "buildImage": "default",
+    "nodeVersion": "20",
+    "environment": {
+      "production": {
+        "url": "https://cinargrill.de",
+        "branch": "main"
+      },
+      "preview": {
+        "url": "https://preview--cinargrill.netlify.app",
+        "branch": "*"
+      }
+    }
+  },
+  "monitoring": {
+    "slos": {
+      "availability": 99.5,
+      "p75LCP": 2500,
+      "p95LCP": 3500,
+      "criticalA11yIssues": 0,
+      "criticalSecurityIssues": 0
+    },
+    "alerts": {
+      "downtime": true,
+      "performanceDegradation": true,
+      "securityVulnerabilities": true
+    }
+  },
+  "quality": {
+    "gates": {
+      "lighthouse": {
+        "performance": 95,
+        "accessibility": 95,
+        "bestPractices": 95,
+        "seo": 95,
+        "pwa": null
+      },
+      "securityHeaders": {
+        "score": "A",
+        "tool": "securityheaders.com"
+      },
+      "accessibility": {
+        "critical": 0,
+        "serious": 0,
+        "tools": ["axe", "pa11y"]
+      },
+      "sri": {
+        "coverage": 100
+      }
+    },
+    "ci": {
+      "platform": "github-actions",
+      "blockOnFailure": true,
+      "checks": [
+        "lighthouse",
+        "accessibility",
+        "security-headers",
+        "link-checker",
+        "sri-verification",
+        "dependency-audit"
+      ]
+    }
+  }
+}

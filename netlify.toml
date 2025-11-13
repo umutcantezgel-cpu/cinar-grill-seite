@@ -1,0 +1,138 @@
+# Netlify Configuration
+# Production-grade settings with security headers and optimization
+
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--production=false"
+
+# Production context
+[context.production]
+  command = "npm run build"
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+# Deploy Preview context
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "staging"
+
+# Branch deploys
+[context.branch-deploy]
+  command = "npm run build"
+
+# Headers for all pages (Security hardening)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Strict Transport Security (HSTS)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # Content Security Policy (CSP) - STRICT MODE
+    # Note: Nonces will be added dynamically for inline scripts if needed
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'strict-dynamic';
+      style-src 'self';
+      img-src 'self' data: https:;
+      font-src 'self';
+      connect-src 'self';
+      frame-src 'none';
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      upgrade-insecure-requests;
+    """
+
+    # Additional Security Headers
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "0"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Permissions Policy (Feature Policy)
+    Permissions-Policy = """
+      geolocation=(),
+      microphone=(),
+      camera=(),
+      payment=(),
+      usb=(),
+      magnetometer=(),
+      gyroscope=(),
+      accelerometer=()
+    """
+
+    # Cross-Origin Policies
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+    # Cache Control (default for HTML)
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Static Assets Caching (CSS, JS, Fonts, Images)
+[[headers]]
+  for = "/_assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    # SRI will be verified via integrity attributes
+
+[[headers]]
+  for = "/assets/font/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Manifest and Service Worker
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=3600"
+
+# Redirects
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+  force = true
+
+# Trailing slash redirect (optional - choose one approach)
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 301
+  force = false
+
+# 404 handling
+[[redirects]]
+  from = "/*"
+  to = "/404"
+  status = 404
+
+# Forms (for reservations and contact)
+[forms]
+  # Netlify Forms settings
+
+# Functions (if needed in future)
+[functions]
+  directory = "netlify/functions"
+
+# Plugins (optional - add if needed)
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+#
+#   [plugins.inputs]
+#     output_path = "lighthouse-report"

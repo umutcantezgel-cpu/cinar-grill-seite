@@ -1,0 +1,16 @@
+# Robots.txt - Cinar Grill
+# Production-ready configuration
+
+User-agent: *
+Allow: /
+
+# Disallow admin/internal paths
+Disallow: /_assets/
+Disallow: /api/
+Disallow: /.well-known/
+
+# Sitemaps
+Sitemap: https://cinargrill.de/sitemap.xml
+
+# Crawl-delay for good citizenship
+Crawl-delay: 1

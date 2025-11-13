@@ -1,0 +1,67 @@
+---
+/**
+ * Button Component
+ * Accessible button with multiple variants
+ */
+
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  fullWidth?: boolean;
+  class?: string;
+  external?: boolean;
+  ariaLabel?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  fullWidth = false,
+  class: className = '',
+  external = false,
+  ariaLabel,
+} = Astro.props;
+
+const variantClasses = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  ghost: 'btn-ghost',
+};
+
+const sizeClasses = {
+  sm: 'text-sm px-4 py-2 min-h-[36px]',
+  md: 'text-base px-6 py-3 min-h-[44px]',
+  lg: 'text-lg px-8 py-4 min-h-[52px]',
+};
+
+const buttonClasses = [
+  'btn',
+  variantClasses[variant],
+  sizeClasses[size],
+  fullWidth && 'w-full',
+  disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
+  className,
+].filter(Boolean).join(' ');
+
+const Tag = href ? 'a' : 'button';
+const linkProps = href ? {
+  href,
+  ...(external && { target: '_blank', rel: 'noopener noreferrer' }),
+} : {};
+const buttonProps = !href ? { type, disabled } : {};
+---
+
+<Tag
+  class={buttonClasses}
+  aria-label={ariaLabel}
+  {...linkProps}
+  {...buttonProps}
+>
+  <slot />
+</Tag>

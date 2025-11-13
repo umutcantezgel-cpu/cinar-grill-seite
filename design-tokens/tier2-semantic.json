@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://cinargrill.de/schemas/design-tokens/tier2-semantic.json",
+  "version": "1.0.0",
+  "description": "Tier 2: Semantic Tokens - Contextual meaning mapped from primitives",
+  "imports": ["tier1-primitive.json"],
+  "colors": {
+    "brand": {
+      "primary": "{colors.red.950}",
+      "primaryHover": "{colors.red.900}",
+      "primaryActive": "{colors.red.800}",
+      "secondary": "{colors.gray.900}",
+      "accent": "{colors.gold.600}",
+      "accentHover": "{colors.gold.700}"
+    },
+    "text": {
+      "primary": "{colors.gray.950}",
+      "secondary": "{colors.gray.700}",
+      "tertiary": "{colors.gray.600}",
+      "inverse": "{colors.white}",
+      "link": "{colors.red.950}",
+      "linkHover": "{colors.red.900}",
+      "disabled": "{colors.gray.400}"
+    },
+    "background": {
+      "primary": "{colors.white}",
+      "secondary": "{colors.gray.50}",
+      "tertiary": "{colors.beige.50}",
+      "inverse": "{colors.gray.950}",
+      "overlay": "rgba(0, 0, 0, 0.5)"
+    },
+    "surface": {
+      "base": "{colors.white}",
+      "raised": "{colors.white}",
+      "sunken": "{colors.gray.50}",
+      "glass": "rgba(255, 255, 255, 0.7)",
+      "glassDark": "rgba(45, 45, 45, 0.8)"
+    },
+    "border": {
+      "default": "{colors.gray.300}",
+      "subtle": "{colors.gray.200}",
+      "strong": "{colors.gray.500}",
+      "inverse": "{colors.white}",
+      "glass": "rgba(255, 255, 255, 0.3)"
+    },
+    "feedback": {
+      "success": "#10B981",
+      "successLight": "#D1FAE5",
+      "warning": "#F59E0B",
+      "warningLight": "#FEF3C7",
+      "error": "#EF4444",
+      "errorLight": "#FEE2E2",
+      "info": "#3B82F6",
+      "infoLight": "#DBEAFE"
+    },
+    "interactive": {
+      "default": "{colors.red.950}",
+      "hover": "{colors.red.900}",
+      "active": "{colors.red.800}",
+      "focus": "{colors.gold.600}",
+      "disabled": "{colors.gray.300}",
+      "visited": "{colors.terracotta.700}"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": "'Playfair Display', serif",
+      "body": "'Inter', system-ui, -apple-system, sans-serif",
+      "accent": "'Merriweather', serif",
+      "mono": "'Fira Code', 'Courier New', monospace"
+    },
+    "heading": {
+      "h1": {
+        "fontSize": "{fontSize.6xl}",
+        "fontWeight": "{fontWeight.bold}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.tight}",
+        "fontFamily": "{typography.fontFamily.display}"
+      },
+      "h2": {
+        "fontSize": "{fontSize.5xl}",
+        "fontWeight": "{fontWeight.bold}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.tight}",
+        "fontFamily": "{typography.fontFamily.display}"
+      },
+      "h3": {
+        "fontSize": "{fontSize.4xl}",
+        "fontWeight": "{fontWeight.semibold}",
+        "lineHeight": "{lineHeight.snug}",
+        "letterSpacing": "{letterSpacing.normal}",
+        "fontFamily": "{typography.fontFamily.display}"
+      },
+      "h4": {
+        "fontSize": "{fontSize.3xl}",
+        "fontWeight": "{fontWeight.semibold}",
+        "lineHeight": "{lineHeight.snug}",
+        "fontFamily": "{typography.fontFamily.body}"
+      },
+      "h5": {
+        "fontSize": "{fontSize.2xl}",
+        "fontWeight": "{fontWeight.medium}",
+        "lineHeight": "{lineHeight.normal}",
+        "fontFamily": "{typography.fontFamily.body}"
+      },
+      "h6": {
+        "fontSize": "{fontSize.xl}",
+        "fontWeight": "{fontWeight.medium}",
+        "lineHeight": "{lineHeight.normal}",
+        "fontFamily": "{typography.fontFamily.body}"
+      }
+    },
+    "body": {
+      "large": {
+        "fontSize": "{fontSize.lg}",
+        "lineHeight": "{lineHeight.relaxed}",
+        "fontFamily": "{typography.fontFamily.body}"
+      },
+      "base": {
+        "fontSize": "{fontSize.base}",
+        "lineHeight": "{lineHeight.normal}",
+        "fontFamily": "{typography.fontFamily.body}"
+      },
+      "small": {
+        "fontSize": "{fontSize.sm}",
+        "lineHeight": "{lineHeight.normal}",
+        "fontFamily": "{typography.fontFamily.body}"
+      }
+    }
+  },
+  "spacing": {
+    "section": {
+      "xs": "{spacing.8}",
+      "sm": "{spacing.12}",
+      "md": "{spacing.16}",
+      "lg": "{spacing.24}",
+      "xl": "{spacing.32}"
+    },
+    "component": {
+      "xs": "{spacing.2}",
+      "sm": "{spacing.3}",
+      "md": "{spacing.4}",
+      "lg": "{spacing.6}",
+      "xl": "{spacing.8}"
+    },
+    "inline": {
+      "xs": "{spacing.1}",
+      "sm": "{spacing.2}",
+      "md": "{spacing.3}",
+      "lg": "{spacing.4}"
+    }
+  },
+  "effects": {
+    "shadow": {
+      "subtle": "{boxShadow.xs}",
+      "default": "{boxShadow.sm}",
+      "medium": "{boxShadow.md}",
+      "large": "{boxShadow.lg}",
+      "extraLarge": "{boxShadow.xl}"
+    },
+    "glassmorphism": {
+      "light": {
+        "background": "rgba(255, 255, 255, 0.7)",
+        "backdropFilter": "blur(10px) saturate(180%)",
+        "border": "1px solid rgba(255, 255, 255, 0.3)",
+        "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.1)"
+      },
+      "medium": {
+        "background": "rgba(255, 255, 255, 0.5)",
+        "backdropFilter": "blur(16px) saturate(180%)",
+        "border": "1px solid rgba(255, 255, 255, 0.2)",
+        "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.15)"
+      },
+      "dark": {
+        "background": "rgba(45, 45, 45, 0.8)",
+        "backdropFilter": "blur(10px) saturate(180%)",
+        "border": "1px solid rgba(255, 255, 255, 0.1)",
+        "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.3)"
+      }
+    }
+  },
+  "animation": {
+    "duration": {
+      "instant": "{duration.75}",
+      "fast": "{duration.150}",
+      "normal": "{duration.200}",
+      "slow": "{duration.300}",
+      "slower": "{duration.500}"
+    },
+    "easing": {
+      "default": "{easing.inOut}",
+      "in": "{easing.in}",
+      "out": "{easing.out}"
+    }
+  },
+  "radius": {
+    "button": "{borderRadius.lg}",
+    "card": "{borderRadius.xl}",
+    "input": "{borderRadius.md}",
+    "modal": "{borderRadius.2xl}",
+    "image": "{borderRadius.lg}"
+  },
+  "accessibility": {
+    "focusRing": {
+      "width": "2px",
+      "style": "solid",
+      "color": "{colors.interactive.focus}",
+      "offset": "2px"
+    },
+    "targetSize": {
+      "minimum": "44px",
+      "comfortable": "48px"
+    },
+    "contrast": {
+      "text": "4.5",
+      "largeText": "3.0",
+      "ui": "3.0"
+    }
+  }
+}

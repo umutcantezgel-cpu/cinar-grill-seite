@@ -1,0 +1,63 @@
+---
+/**
+ * 404 Error Page
+ * Lightweight, helpful error page with navigation back to site
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Button from '../components/Button.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Seite nicht gefunden - Cinar Grill"
+  description="Die angeforderte Seite wurde nicht gefunden."
+  noindex={true}
+>
+  <Navigation slot="header" />
+
+  <div class="min-h-[60vh] flex items-center justify-center px-4">
+    <div class="text-center max-w-2xl">
+      <!-- Error Code -->
+      <h1 class="text-9xl font-display font-bold text-glut-950 mb-4" aria-label="Fehler 404">
+        404
+      </h1>
+
+      <!-- Error Message -->
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-charcoal-950 mb-4">
+        Seite nicht gefunden
+      </h2>
+
+      <p class="text-lg text-charcoal-700 mb-8">
+        Die Seite, die Sie suchen, existiert leider nicht oder wurde verschoben.
+        Kehren Sie zur Startseite zurück oder nutzen Sie die Navigation, um weiterzubrowsen.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button variant="primary" size="lg" href="/">
+          Zur Startseite
+        </Button>
+        <Button variant="secondary" size="lg" href="/speisekarte">
+          Zur Speisekarte
+        </Button>
+      </div>
+
+      <!-- Helpful Links -->
+      <div class="mt-12 pt-8 border-t border-charcoal-200">
+        <p class="text-sm text-charcoal-600 mb-4">Vielleicht suchen Sie nach:</p>
+        <nav aria-label="Häufige Seiten">
+          <ul class="flex flex-wrap justify-center gap-4 text-sm">
+            <li><a href="/" class="text-glut-950 hover:underline">Startseite</a></li>
+            <li><a href="/speisekarte" class="text-glut-950 hover:underline">Speisekarte</a></li>
+            <li><a href="/reservierung" class="text-glut-950 hover:underline">Reservierung</a></li>
+            <li><a href="/kontakt" class="text-glut-950 hover:underline">Kontakt</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

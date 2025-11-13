@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://cinargrill.de/schemas/events.catalog.json",
+  "version": "1.0.0",
+  "description": "Event catalog for async communication (CloudEvents-inspired)",
+  "events": [
+    {
+      "id": "consent.updated",
+      "type": "io.cinargrill.consent.updated",
+      "specversion": "1.0",
+      "description": "Fired when user consent preferences change",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"},
+          "categories": {
+            "type": "object",
+            "properties": {
+              "necessary": {"type": "boolean"},
+              "analytics": {"type": "boolean"},
+              "marketing": {"type": "boolean"},
+              "maps": {"type": "boolean"},
+              "social": {"type": "boolean"}
+            }
+          }
+        },
+        "required": ["timestamp", "categories"]
+      },
+      "subscribers": ["analytics-loader", "map-embedder", "social-embedder"]
+    },
+    {
+      "id": "form.submission.started",
+      "type": "io.cinargrill.form.submission.started",
+      "specversion": "1.0",
+      "description": "Fired when form submission begins",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "formId": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "required": ["formId", "timestamp"]
+      },
+      "subscribers": ["loading-indicator", "analytics"]
+    },
+    {
+      "id": "form.submission.success",
+      "type": "io.cinargrill.form.submission.success",
+      "specversion": "1.0",
+      "description": "Fired when form submission succeeds",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "formId": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "redirectUrl": {"type": "string", "format": "uri"}
+        },
+        "required": ["formId", "timestamp"]
+      },
+      "subscribers": ["success-message", "analytics", "redirect-handler"]
+    },
+    {
+      "id": "form.submission.error",
+      "type": "io.cinargrill.form.submission.error",
+      "specversion": "1.0",
+      "description": "Fired when form submission fails",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "formId": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "error": {"type": "string"}
+        },
+        "required": ["formId", "timestamp", "error"]
+      },
+      "subscribers": ["error-message", "analytics"]
+    },
+    {
+      "id": "navigation.opened",
+      "type": "io.cinargrill.navigation.opened",
+      "specversion": "1.0",
+      "description": "Fired when mobile navigation menu opens",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "required": ["timestamp"]
+      },
+      "subscribers": ["body-scroll-lock", "analytics"]
+    },
+    {
+      "id": "navigation.closed",
+      "type": "io.cinargrill.navigation.closed",
+      "specversion": "1.0",
+      "description": "Fired when mobile navigation menu closes",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "required": ["timestamp"]
+      },
+      "subscribers": ["body-scroll-unlock", "analytics"]
+    },
+    {
+      "id": "gallery.lightbox.opened",
+      "type": "io.cinargrill.gallery.lightbox.opened",
+      "specversion": "1.0",
+      "description": "Fired when image lightbox opens",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "imageId": {"type": "string"},
+          "imageUrl": {"type": "string", "format": "uri"},
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "required": ["imageId", "imageUrl", "timestamp"]
+      },
+      "subscribers": ["lightbox-renderer", "body-scroll-lock", "analytics"]
+    },
+    {
+      "id": "gallery.lightbox.closed",
+      "type": "io.cinargrill.gallery.lightbox.closed",
+      "specversion": "1.0",
+      "description": "Fired when image lightbox closes",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "required": ["timestamp"]
+      },
+      "subscribers": ["lightbox-cleanup", "body-scroll-unlock", "analytics"]
+    },
+    {
+      "id": "page.loaded",
+      "type": "io.cinargrill.page.loaded",
+      "specversion": "1.0",
+      "description": "Fired when page has fully loaded",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "performanceMetrics": {
+            "type": "object",
+            "properties": {
+              "lcp": {"type": "number"},
+              "fid": {"type": "number"},
+              "cls": {"type": "number"}
+            }
+          }
+        },
+        "required": ["path", "timestamp"]
+      },
+      "subscribers": ["analytics", "performance-monitor"]
+    },
+    {
+      "id": "error.occurred",
+      "type": "io.cinargrill.error.occurred",
+      "specversion": "1.0",
+      "description": "Fired when a client-side error occurs",
+      "datacontenttype": "application/json",
+      "dataschema": {
+        "type": "object",
+        "properties": {
+          "message": {"type": "string"},
+          "stack": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "userAgent": {"type": "string"}
+        },
+        "required": ["message", "timestamp"]
+      },
+      "subscribers": ["error-logger", "analytics"]
+    }
+  ]
+}

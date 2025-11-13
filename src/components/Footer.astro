@@ -1,0 +1,134 @@
+---
+/**
+ * Footer Component
+ * Site footer with navigation, legal links, and contact info
+ */
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  navigation: [
+    { label: 'Startseite', href: '/' },
+    { label: 'Speisekarte', href: '/speisekarte' },
+    { label: 'Über uns', href: '/ueber-uns' },
+    { label: 'Kontakt', href: '/kontakt' },
+  ],
+  legal: [
+    { label: 'Impressum', href: '/impressum' },
+    { label: 'Datenschutz', href: '/datenschutz' },
+  ],
+  social: [
+    // TODO: Add social media links when available
+    // { label: 'Instagram', href: '#', icon: 'instagram' },
+    // { label: 'Facebook', href: '#', icon: 'facebook' },
+  ],
+};
+---
+
+<footer class="bg-charcoal-900 text-white mt-auto">
+  <div class="container-custom py-12 md:py-16">
+    <!-- Main Footer Content -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <!-- Brand Section -->
+      <div class="lg:col-span-2">
+        <h2 class="text-2xl font-display font-bold text-white mb-4">
+          CINAR GRILL
+        </h2>
+        <p class="text-charcoal-400 mb-4 max-w-md">
+          Authentische türkische Grillkunst. Frische Zutaten, traditionelle Rezepte und herzliche Gastfreundschaft.
+        </p>
+        <!-- TODO: Add address when available -->
+        <address class="text-charcoal-400 not-italic">
+          <p>TODO: Straße Hausnummer</p>
+          <p>TODO: PLZ Stadt</p>
+          <p class="mt-2">
+            <a href="tel:+49TODO" class="hover:text-gold-400 transition-colors">
+              Tel: +49 TODO
+            </a>
+          </p>
+          <p>
+            <a href="mailto:info@cinargrill.de" class="hover:text-gold-400 transition-colors">
+              info@cinargrill.de
+            </a>
+          </p>
+        </address>
+      </div>
+
+      <!-- Navigation Links -->
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Navigation</h3>
+        <ul class="space-y-2">
+          {footerLinks.navigation.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-charcoal-400 hover:text-white transition-colors duration-150"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal & Opening Hours -->
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Rechtliches</h3>
+        <ul class="space-y-2 mb-6">
+          {footerLinks.legal.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-charcoal-400 hover:text-white transition-colors duration-150"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="text-lg font-semibold text-white mb-4">Öffnungszeiten</h3>
+        <div class="text-charcoal-400 text-sm space-y-1">
+          <p>Mo–Fr: 11:00–22:00</p>
+          <p>Sa–So: 12:00–23:00</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-charcoal-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-charcoal-500 text-sm">
+        © {currentYear} Cinar Grill. Alle Rechte vorbehalten.
+      </p>
+
+      <!-- Social Media Links (if available) -->
+      {footerLinks.social.length > 0 && (
+        <div class="flex gap-4">
+          {footerLinks.social.map((social) => (
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-charcoal-400 hover:text-white transition-colors duration-150"
+              aria-label={social.label}
+            >
+              {/* TODO: Add social media icons */}
+              {social.label}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <!-- Credits -->
+      <p class="text-charcoal-600 text-xs">
+        Built with <span class="text-glut-500">♥</span> using Astro & Tailwind CSS
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer a:focus-visible {
+    @apply outline-none ring-2 ring-gold-400 ring-offset-2 ring-offset-charcoal-900 rounded;
+  }
+</style>

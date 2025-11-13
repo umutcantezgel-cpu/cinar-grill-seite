@@ -1,0 +1,155 @@
+---
+/**
+ * Impressum (Legal Notice)
+ * Required by German law (§ 5 TMG)
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Impressum - Cinar Grill"
+  description="Impressum und rechtliche Informationen zu Cinar Grill gemäß § 5 TMG."
+  canonical="/impressum"
+  noindex={true}
+>
+  <Navigation slot="header" />
+
+  <div class="section">
+    <div class="container-custom max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-display font-bold text-charcoal-950 mb-8">
+        Impressum
+      </h1>
+
+      <div class="prose prose-lg max-w-none">
+        <!-- Company Information -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            Angaben gemäß § 5 TMG
+          </h2>
+          <p>
+            <strong>TODO: Firmenname</strong><br>
+            TODO: Rechtsform (z.B. GmbH, Einzelunternehmen)<br>
+            TODO: Straße Hausnummer<br>
+            TODO: PLZ Stadt
+          </p>
+        </section>
+
+        <!-- Contact -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            Kontakt
+          </h2>
+          <p>
+            <strong>Telefon:</strong> <a href="tel:+49TODO">+49 TODO</a><br>
+            <strong>E-Mail:</strong> <a href="mailto:info@cinargrill.de">info@cinargrill.de</a>
+          </p>
+        </section>
+
+        <!-- Registration -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            Registereintrag
+          </h2>
+          <p>
+            <strong>Handelsregister:</strong> TODO (z.B. HRB 12345)<br>
+            <strong>Registergericht:</strong> TODO (z.B. Amtsgericht Frankfurt)<br>
+            <strong>Umsatzsteuer-ID:</strong> TODO (gemäß §27a Umsatzsteuergesetz)
+          </p>
+        </section>
+
+        <!-- Responsible Person -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            Verantwortlich für den Inhalt
+          </h2>
+          <p>
+            TODO: Name des Geschäftsführers / Inhabers<br>
+            TODO: Straße Hausnummer<br>
+            TODO: PLZ Stadt
+          </p>
+        </section>
+
+        <!-- Supervisory Authority -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            Zuständige Aufsichtsbehörde
+          </h2>
+          <p>
+            TODO: Zuständiges Gesundheitsamt / Gewerbeaufsichtsamt<br>
+            TODO: Adresse der Behörde
+          </p>
+        </section>
+
+        <!-- Disclaimer -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            Haftungsausschluss
+          </h2>
+
+          <h3 class="text-xl font-semibold text-charcoal-950 mt-6 mb-3">
+            Haftung für Inhalte
+          </h3>
+          <p class="text-charcoal-700">
+            Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
+            Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+            Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten
+            nach den allgemeinen Gesetzen verantwortlich.
+          </p>
+
+          <h3 class="text-xl font-semibold text-charcoal-950 mt-6 mb-3">
+            Haftung für Links
+          </h3>
+          <p class="text-charcoal-700">
+            Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen
+            Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen.
+            Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der
+            Seiten verantwortlich.
+          </p>
+
+          <h3 class="text-xl font-semibold text-charcoal-950 mt-6 mb-3">
+            Urheberrecht
+          </h3>
+          <p class="text-charcoal-700">
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen
+            dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art
+            der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen
+            Zustimmung des jeweiligen Autors bzw. Erstellers.
+          </p>
+        </section>
+
+        <!-- EU Dispute Resolution -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold text-charcoal-950 mb-4">
+            EU-Streitschlichtung
+          </h2>
+          <p class="text-charcoal-700">
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" class="text-glut-950 hover:underline">
+              https://ec.europa.eu/consumers/odr
+            </a><br>
+            Unsere E-Mail-Adresse finden Sie oben im Impressum.
+          </p>
+          <p class="text-charcoal-700 mt-4">
+            Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+            Verbraucherschlichtungsstelle teilzunehmen.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .prose a {
+    @apply text-glut-950 hover:underline;
+  }
+
+  .prose p {
+    @apply mb-4;
+  }
+</style>

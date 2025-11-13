@@ -1,0 +1,27 @@
+{
+  "name": "Cinar Grill - Türkisches Restaurant",
+  "short_name": "Cinar Grill",
+  "description": "Authentisches türkisches Grill-Restaurant mit traditionellen Spezialitäten",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C1272D",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "restaurant", "business"],
+  "lang": "de-DE",
+  "dir": "ltr"
+}

@@ -1,0 +1,35 @@
+---
+/**
+ * Card Component
+ * Reusable card with optional glass effect and hover states
+ */
+
+export interface Props {
+  variant?: 'default' | 'glass' | 'elevated';
+  hover?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  hover = false,
+  class: className = '',
+} = Astro.props;
+
+const variantClasses = {
+  default: 'bg-white border border-charcoal-200 shadow-sm',
+  glass: 'glass-card',
+  elevated: 'bg-white shadow-md border-none',
+};
+
+const cardClasses = [
+  'rounded-xl p-6',
+  variantClasses[variant],
+  hover && 'transition-all duration-200 hover:shadow-lg hover:-translate-y-1 cursor-pointer',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<div class={cardClasses}>
+  <slot />
+</div>

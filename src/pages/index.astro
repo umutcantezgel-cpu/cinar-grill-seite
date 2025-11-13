@@ -1,0 +1,232 @@
+---
+/**
+ * Homepage - Cinar Grill
+ * Main landing page with hero, USPs, signature dishes, and testimonials
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Footer from '../components/Footer.astro';
+
+// SEO Data
+const seoRouteData = await import('../../contracts/seo.routes.json');
+const homeRoute = seoRouteData.routes.find((r) => r.path === '/');
+
+// Structured Data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://cinargrill.de/#restaurant",
+  "name": "Cinar Grill",
+  "description": "Authentisches türkisches Grill-Restaurant mit traditionellen Spezialitäten",
+  "url": "https://cinargrill.de",
+  "telephone": "+49-TODO-PHONE",
+  "email": "info@cinargrill.de",
+  "servesCuisine": ["Turkish", "Mediterranean", "Grilled"],
+  "priceRange": "€€",
+  "acceptsReservations": true,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "TODO Straße Hausnummer",
+    "addressLocality": "TODO Stadt",
+    "postalCode": "TODO PLZ",
+    "addressCountry": "DE"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "11:00",
+      "closes": "22:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday", "Sunday"],
+      "opens": "12:00",
+      "closes": "23:00"
+    }
+  ],
+  "menu": "https://cinargrill.de/speisekarte",
+  "image": "https://cinargrill.de/assets/img/restaurant-exterior.jpg"
+};
+
+// Signature Dishes (Example Data)
+const signatureDishes = [
+  {
+    name: 'Adana Kebap',
+    description: 'Würziges Hackfleisch vom Grill, serviert mit Reis und Salat',
+    price: '14.90',
+    image: '/assets/img/dishes/adana-kebap.jpg',
+  },
+  {
+    name: 'Köfte',
+    description: 'Hausgemachte Fleischbällchen nach traditionellem Rezept',
+    price: '12.90',
+    image: '/assets/img/dishes/kofte.jpg',
+  },
+  {
+    name: 'Lahmacun',
+    description: 'Türkische Pizza mit Hackfleisch und frischen Kräutern',
+    price: '8.90',
+    image: '/assets/img/dishes/lahmacun.jpg',
+  },
+];
+
+// USPs
+const usps = [
+  {
+    title: 'Authentische Rezepte',
+    description: 'Traditionelle türkische Grillkunst, von Generation zu Generation weitergegeben.',
+    icon: '🔥',
+  },
+  {
+    title: 'Frische Zutaten',
+    description: 'Täglich frisch eingekauft von ausgewählten Lieferanten.',
+    icon: '🥗',
+  },
+  {
+    title: 'Herzliche Gastfreundschaft',
+    description: 'Familiäre Atmosphäre und persönlicher Service.',
+    icon: '❤️',
+  },
+  {
+    title: 'Faire Preise',
+    description: 'Beste Qualität zu einem fairen Preis-Leistungs-Verhältnis.',
+    icon: '💰',
+  },
+];
+---
+
+<BaseLayout
+  title={homeRoute?.meta.title || 'Cinar Grill'}
+  description={homeRoute?.meta.description || ''}
+  canonical="/"
+  ogImage="/assets/img/og-home.jpg"
+  structuredData={structuredData}
+>
+  <!-- Navigation -->
+  <Navigation slot="header" />
+
+  <!-- Hero Section -->
+  <Hero
+    title="Authentische Türkische Grillkunst"
+    subtitle="Erleben Sie traditionelle Aromen, frische Zutaten und herzliche Gastfreundschaft im Herzen der Stadt."
+  >
+    <div slot="cta" class="flex flex-col sm:flex-row gap-4 justify-center">
+      <Button variant="primary" size="lg" href="/reservierung">
+        Tisch reservieren
+      </Button>
+      <Button variant="ghost" size="lg" href="/speisekarte">
+        Speisekarte ansehen
+      </Button>
+    </div>
+  </Hero>
+
+  <!-- USPs Section -->
+  <section class="section bg-warm-beige-50">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal-950 mb-4">
+          Was uns auszeichnet
+        </h2>
+        <p class="text-lg text-charcoal-700 max-w-2xl mx-auto">
+          Vier Gründe, warum unsere Gäste immer wieder zu uns kommen.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {usps.map((usp) => (
+          <Card variant="glass" class="text-center">
+            <div class="text-5xl mb-4" aria-hidden="true">{usp.icon}</div>
+            <h3 class="text-xl font-semibold text-charcoal-950 mb-2">
+              {usp.title}
+            </h3>
+            <p class="text-charcoal-700">
+              {usp.description}
+            </p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Signature Dishes Section -->
+  <section class="section">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal-950 mb-4">
+          Unsere Spezialitäten
+        </h2>
+        <p class="text-lg text-charcoal-700 max-w-2xl mx-auto">
+          Probieren Sie unsere beliebtesten Gerichte – mit Liebe zubereitet und gegrillt.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {signatureDishes.map((dish) => (
+          <Card hover class="overflow-hidden">
+            <div class="aspect-video bg-charcoal-200 rounded-lg mb-4 overflow-hidden">
+              {/* TODO: Replace with actual images */}
+              <div class="w-full h-full flex items-center justify-center text-charcoal-500">
+                Bild: {dish.name}
+              </div>
+            </div>
+            <h3 class="text-2xl font-display font-semibold text-charcoal-950 mb-2">
+              {dish.name}
+            </h3>
+            <p class="text-charcoal-700 mb-4">
+              {dish.description}
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold text-glut-950">
+                {dish.price} €
+              </span>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <div class="text-center mt-12">
+        <Button variant="primary" size="lg" href="/speisekarte">
+          Zur vollständigen Speisekarte
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section bg-glut-950 text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+        Bereit für ein kulinarisches Erlebnis?
+      </h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+        Reservieren Sie jetzt Ihren Tisch und erleben Sie authentische türkische Küche.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button
+          variant="secondary"
+          size="lg"
+          href="/reservierung"
+          class="!bg-white !text-glut-950 hover:!bg-warm-beige-100"
+        >
+          Jetzt reservieren
+        </Button>
+        <Button
+          variant="ghost"
+          size="lg"
+          href="/kontakt"
+          class="!text-white !border-white hover:!bg-white/10"
+        >
+          Kontakt aufnehmen
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <Footer slot="footer" />
+</BaseLayout>
